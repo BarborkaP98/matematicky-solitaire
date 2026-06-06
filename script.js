@@ -1,5 +1,6 @@
 let balicek = [];
 let aktualni = null;
+let tazenaKarta = null;
 
 // náhodné číslo
 function rand(min, max) {
@@ -31,10 +32,29 @@ function generuj() {
   balicek.sort(() => Math.random() - 0.5);
 }
 
+// ✅ vytvoří kartu (jedno místo = méně chyb)
+function vytvorKartu(text, vysledek) {
+  let karta = document.createElement("div");
+  karta.className = "karta";
+  karta.innerText = text;
+
+  karta.dataset.v = vysledek;
+  karta.draggable = true;
+
+  karta.addEventListener("dragstart", (e) => {
+    tazenaKarta = karta;
+
+    e.dataTransfer.setData("text/plain", JSON.stringify({
+      priklad: karta.innerText,
+      vysledek: karta.dataset.v
+    }));
+  });
+
+  return karta;
+}
+
 // ✅ líznutí
 function lizniKartu() {
-  
-
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
     return;
@@ -45,28 +65,11 @@ function lizniKartu() {
   let zona = document.getElementById("aktualni-karta");
   zona.innerHTML = "";
 
-  let karta = document.createElement("div");
-  karta.className = "karta";
-  karta.innerText = aktualni.priklad;
-
-  karta.dataset.v = aktualni.vysledek;
-  karta.draggable = true;
-
-  karta.addEventListener("dragstart", (e) => {
-    e.dataTransfer.setData("text/plain", JSON.stringify({
-      priklad: karta.innerText,
-      vysledek: karta.dataset.v
-    }));
-    
- // ✅ uložíme si přímo tu kartu
-  window.tazenaKarta = karta;
-
-  });
-
+  let karta = vytvorKartu(aktualni.priklad, aktualni.vysledek);
   zona.appendChild(karta);
 }
 
-// ✅ drop (bez blokování chyb)
+// ✅ drop do sloupců
 document.querySelectorAll(".sloupec").forEach(sloupec => {
 
   sloupec.addEventListener("dragover", (e) => {
@@ -81,45 +84,25 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
 
     let data = JSON.parse(dataText);
 
-    let karta = document.createElement("div");
-    karta.className = "karta";
-    karta.innerText = data.priklad;
-    karta.dataset.v = data.vysledek;
+    let novaKarta = vytvorKartu(data.priklad, data.vysledek);
+    sloupec.appendChild(novaKarta);
 
-    sloupec.appendChild(karta);
-    if (window.tazenaKarta) {
-  window.tazenaKarta.remove();
-  window.tazenaKarta = null;
-}
-``
-    let puvodni = document.querySelector(".karta.dragging");
-if (puvodni) puvodni.remove();
-karta.draggable = true;
+    // ✅ smaže původní AŽ po úspěšném dropu
+    if (tazenaKarta) {
+      tazenaKarta.remove();
+      tazenaKarta = null;
+    }
 
-karta.addEventListener("dragstart", (e) => {
-  karta.classList.add("dragging");
-  e.dataTransfer.setData("text/plain", JSON.stringify({
-    priklad: karta.innerText,
-    vysledek: karta.dataset.v
-  }));
-
-  
-});
-    // reset
+    // ✅ vyčistí střed
     aktualni = null;
     document.getElementById("aktualni-karta").innerHTML = "";
   });
 
 });
 
-karta.addEventListener("dragend", () => {
-  karta.classList.remove("dragging");
-});
-
 // ✅ kontrola
 function zkontroluj() {
   let sloupce = document.querySelectorAll(".sloupec");
-
   let zprava = "Výsledky:\n";
 
   sloupce.forEach((sloupec, index) => {
@@ -151,20 +134,17 @@ function zkontroluj() {
   alert(zprava);
 }
 
-// start
-generuj();
+// ✅ nová hra
 function novaHra() {
-
-  // vymaže sloupce
   document.querySelectorAll(".sloupec").forEach(sloupec => {
     sloupec.innerHTML = "";
   });
 
-  // vymaže aktuální kartu
   document.getElementById("aktualni-karta").innerHTML = "";
 
-  // reset balíčku
   aktualni = null;
   generuj();
 }
 
+// start
+generuj();
