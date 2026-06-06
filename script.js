@@ -83,7 +83,17 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
     karta.dataset.v = data.vysledek;
 
     sloupec.appendChild(karta);
+karta.draggable = true;
 
+karta.addEventListener("dragstart", (e) => {
+  e.dataTransfer.setData("text/plain", JSON.stringify({
+    priklad: karta.innerText,
+    vysledek: karta.dataset.v
+  }));
+
+  // ✅ důležité – smaže původní kartu při přesunu
+  karta.remove();
+});
     // reset
     aktualni = null;
     document.getElementById("aktualni-karta").innerHTML = "";
