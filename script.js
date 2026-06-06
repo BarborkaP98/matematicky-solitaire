@@ -67,3 +67,34 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
 });
 
 generuj();
+function zkontroluj() {
+  let sloupce = document.querySelectorAll(".sloupec");
+
+  let vysledky = [];
+
+  sloupce.forEach(sloupec => {
+    let karty = sloupec.children;
+
+    if (karty.length === 0) {
+      vysledky.push("❌ prázdný");
+      return;
+    }
+
+    let spravne = true;
+    let prvni = karty[0].dataset.v;
+
+    for (let i = 0; i < karty.length; i++) {
+      if (karty[i].dataset.v != prvni) {
+        spravne = false;
+      }
+    }
+
+    if (spravne) {
+      vysledky.push("✅ " + prvni);
+    } else {
+      vysledky.push("❌ špatně");
+    }
+  });
+
+  alert("Výsledky:\n" + vysledky.join("\n"));
+}
