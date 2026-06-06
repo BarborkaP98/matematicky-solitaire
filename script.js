@@ -71,11 +71,16 @@ function generuj() {
           priklad = `${a} × ${b}`;
 
         } else {
-          // dělení
-          let b = rand(1, 10);
-          let a = v * b;
+         // ✅ malé dělení
+let b = rand(1, 10);
+let a = rand(1, 10) * b;
 
-          priklad = `${a} ÷ ${b}`;
+let vysledek = a / b;
+
+// zajistíme, že výsledek odpovídá v
+if (vysledek !== v) continue;
+
+priklad = `${a} ÷ ${b}`; 
         }
       }
 
