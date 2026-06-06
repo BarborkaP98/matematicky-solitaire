@@ -1,7 +1,7 @@
 body {
   font-family: Arial;
   text-align: center;
-  background-color: #2e7d32; /* zelené pozadí jako solitér */
+  background-color: #2e7d32;
   color: white;
 }
 
@@ -24,7 +24,6 @@ h1 {
   padding: 10px;
 }
 
-/* 🎴 karta */
 .karta {
   background: white;
   color: black;
