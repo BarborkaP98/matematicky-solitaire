@@ -32,7 +32,9 @@ function generuj() {
 }
 
 // líznutí
+
 function lizniKartu() {
+  if (aktualni !== null) return;
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
     return;
@@ -100,7 +102,7 @@ if (!data) return;
 
 document.getElementById("aktualni-karta").innerHTML =
       document.getElementById("aktualni-karta").innerHTML = "";
-
+aktualni = null;
 sloupec.addEventListener("drop", (e) => {
   e.preventDefault();
 
@@ -119,6 +121,7 @@ sloupec.addEventListener("drop", (e) => {
 
   aktualni = null;
   document.getElementById("aktualni-karta").innerHTML = "";
+  aktualni = null;
 });
   });
 
