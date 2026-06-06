@@ -148,3 +148,12 @@ function novaHra() {
 
 // start
 generuj();
+function toggleNavod() {
+  let navod = document.getElementById("navod");
+
+  if (navod.style.display === "none") {
+    navod.style.display = "block";
+  } else {
+    navod.style.display = "none";
+  }
+}
