@@ -55,19 +55,30 @@ else if (typ === "minus") {
   priklad = `${a} - ${b}`;
 }
 else if (typ === "krat") {
-  // malá násobilka (např. do 10)
-  a = rand(1, 10);
-  b = rand(1, 10);
-  v = a * b;
+  // musí platit a * b = v
+  let delitele = [];
+
+  for (let i = 1; i <= v; i++) {
+    if (v % i === 0) {
+      delitele.push(i);
+    }
+  }
+
+  if (delitele.length === 0) continue;
+
+  a = delitele[Math.floor(Math.random() * delitele.length)];
+  b = v / a;
+
   priklad = `${a} × ${b}`;
 }
+
 else if (typ === "deleni") {
-  // vytvoříme dělení bez zbytku
+  // musí platit a / b = v
   b = rand(1, 10);
-  let vysl = rand(1, 10);
-  a = b * vysl;
-  v = vysl;
+  a = v * b;
+
   priklad = `${a} ÷ ${b}`;
+}
 }
 ``
 }
