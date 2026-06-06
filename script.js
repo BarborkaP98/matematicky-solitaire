@@ -96,7 +96,9 @@ if (!data) return;
 
       sloupec.appendChild(karta);
 
-      aktualni = null;
+      sloupec.appendChild(karta);
+
+document.getElementById("aktualni-karta").innerHTML =
       document.getElementById("aktualni-karta").innerHTML = "";
 
 sloupec.addEventListener("drop", (e) => {
