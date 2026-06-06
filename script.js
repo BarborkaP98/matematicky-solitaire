@@ -14,13 +14,13 @@ function generuj() {
 
   let vysledky = [];
 
+  // vytvoří 5 různých výsledků
   while (vysledky.length < 5) {
     let v;
 
     if (rezim === "plusminus") {
       v = rand(0, maxCislo);
     } else {
-      // malá násobilka → výsledek do 100
       v = rand(1, 10) * rand(1, 10);
     }
 
@@ -35,51 +35,49 @@ function generuj() {
 
     while (pocet < 4) {
 
-      let typ;
+      let priklad;
 
       if (rezim === "plusminus") {
-        typ = Math.random() < 0.5 ? "plus" : "minus";
+
+        if (Math.random() < 0.5) {
+          let a = rand(0, v);
+          let b = v - a;
+          priklad = `${a} + ${b}`;
+        } else {
+          let a = rand(v, maxCislo);
+          let b = a - v;
+          priklad = `${a} - ${b}`;
+        }
+
       } else {
-        let moznosti = ["krat", "deleni"];
-        typ = moznosti[Math.floor(Math.random() * moznosti.length)];
+
+        if (Math.random() < 0.5) {
+          // násobení
+          let delitele = [];
+
+          for (let i = 1; i <= 10; i++) {
+            if (v % i === 0) {
+              delitele.push(i);
+            }
+          }
+
+          if (delitele.length === 0) continue;
+
+          let a = delitele[Math.floor(Math.random() * delitele.length)];
+          let b = v / a;
+
+          if (b > 10) continue;
+
+          priklad = `${a} × ${b}`;
+
+        } else {
+          // dělení
+          let b = rand(1, 10);
+          let a = v * b;
+
+          priklad = `${a} ÷ ${b}`;
+        }
       }
-
-      let a, b, priklad;
-
-      if (typ === "plus") {
-        a = rand(0, v);
-        b = v - a;
-        priklad = `${a} + ${b};
-      }
-      else if (typ === "minus") {
-        a = rand(v, maxCislo);
-        b = a - v;
-        priklad = `${a} - ${b};
-      }
- else if (typ === "krat") {
-  // ✅ násobení správně (malá násobilka)
-  let delitele = [];
-
-  for (let i = 1; i <= 10; i++) {
-    if (v % i === 0) {
-      delitele.push(i);
-    }
-  }
-
-  if (delitele.length === 0) continue;
-
-  let a = delitele[Math.floor(Math.random() * delitele.length)];
-  let b = v / a;
-
-  if (b > 10) continue;
-
-  priklad = `${a} × ${b}`;
-}
-else if (typ === "deleni") {else if (typ === "deleni") = `${a} ÷ ${b}`;
-}
-  let b = rand(1, 10);
-  let a = v * b;
-
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
@@ -96,7 +94,6 @@ else if (typ === "deleni") {else if (typ === "deleni") = `${a} ÷ ${b}`;
 
   balicek.sort(() => Math.random() - 0.5);
 }
-
 // ✅ vytvoří kartu (jedno místo = méně chyb)
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
