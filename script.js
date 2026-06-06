@@ -39,9 +39,30 @@ function lizniKartu() {
   }
 
   aktualni = balicek.pop();
-  document.getElementById("aktualni-karta").innerText = aktualni.priklad;
-}
 
+  let zona = document.getElementById("aktualni-karta");
+  zona.innerHTML = "";
+
+  let karta = document.createElement("div");
+  karta.className = "karta";
+  karta.innerText = aktualni.priklad;
+
+  // ✅ důležité
+  karta.dataset.v = aktualni.vysledek;
+
+  // ✅ zapnutí drag
+  karta.draggable = true;
+
+  karta.addEventListener("dragstart", (e) => {
+    e.dataTransfer.setData("text/plain", JSON.stringify({
+      priklad: aktualni.priklad,
+      vysledek: aktualni.vysledek
+    }));
+  });
+
+  zona.appendChild(karta);
+}
+``
 // klikání na sloupce
 document.querySelectorAll(".sloupec").forEach(sloupec => {
   sloupec.onclick = () => {
