@@ -83,22 +83,28 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
     karta.dataset.v = data.vysledek;
 
     sloupec.appendChild(karta);
+    let puvodni = document.querySelector(".karta.dragging");
+if (puvodni) puvodni.remove();
 karta.draggable = true;
 
 karta.addEventListener("dragstart", (e) => {
+  karta.classList.add("dragging");
   e.dataTransfer.setData("text/plain", JSON.stringify({
     priklad: karta.innerText,
     vysledek: karta.dataset.v
   }));
 
-  // ✅ důležité – smaže původní kartu při přesunu
-  karta.remove();
+  
 });
     // reset
     aktualni = null;
     document.getElementById("aktualni-karta").innerHTML = "";
   });
 
+});
+
+karta.addEventListener("dragend", () => {
+  karta.classList.remove("dragging");
 });
 
 // ✅ kontrola
