@@ -103,13 +103,18 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
 // ✅ kontrola
 function zkontroluj() {
   let sloupce = document.querySelectorAll(".sloupec");
-  let zprava = "Výsledky:\n";
 
-  sloupce.forEach((sloupec, index) => {
+  let vseSpravne = true;
+
+  sloupce.forEach(sloupec => {
     let karty = sloupec.children;
 
+    // reset barvy
+    sloupec.style.backgroundColor = "rgba(255,255,255,0.2)";
+
     if (karty.length === 0) {
-      zprava += "Sloupec " + (index + 1) + ": ❌ prázdný\n";
+      sloupec.style.backgroundColor = "#ff9999"; // červená
+      vseSpravne = false;
       return;
     }
 
@@ -123,15 +128,23 @@ function zkontroluj() {
     }
 
     if (ok && karty.length === 4) {
-      zprava += "Sloupec " + (index + 1) + ": ✅ " + prvni + "\n";
-    } else if (ok) {
-      zprava += "Sloupec " + (index + 1) + ": ⚠️ neúplný\n";
-    } else {
-      zprava += "Sloupec " + (index + 1) + ": ❌ špatně\n";
+      sloupec.style.backgroundColor = "#8bc34a"; // zelená
+    } 
+    else if (ok) {
+      sloupec.style.backgroundColor = "#ffd54f"; // žlutá
+      vseSpravne = false;
+    } 
+    else {
+      sloupec.style.backgroundColor = "#ff9999"; // červená
+      vseSpravne = false;
     }
   });
 
-  alert(zprava);
+  if (vseSpravne) {
+    setTimeout(() => {
+      alert("🎉 Skvělá práce!");
+    }, 200);
+  }
 }
 
 // ✅ nová hra
