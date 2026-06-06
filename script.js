@@ -57,6 +57,10 @@ function lizniKartu() {
       priklad: karta.innerText,
       vysledek: karta.dataset.v
     }));
+    
+ // ✅ uložíme si přímo tu kartu
+  window.tazenaKarta = karta;
+
   });
 
   zona.appendChild(karta);
@@ -83,6 +87,11 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
     karta.dataset.v = data.vysledek;
 
     sloupec.appendChild(karta);
+    if (window.tazenaKarta) {
+  window.tazenaKarta.remove();
+  window.tazenaKarta = null;
+}
+``
     let puvodni = document.querySelector(".karta.dragging");
 if (puvodni) puvodni.remove();
 karta.draggable = true;
