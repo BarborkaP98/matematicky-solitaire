@@ -234,3 +234,7 @@ function nastavObtiznost(hodnota) {
   maxCislo = hodnota;
   novaHra();
 }
+function nastavRezim(r) {
+  rezim = r;
+  novaHra();
+}
