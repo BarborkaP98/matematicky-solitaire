@@ -1,10 +1,12 @@
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   text-align: center;
-  background: #2e7d32; /* zelené pozadí jako stůl */
+  background: #1976d2; /* modrá */
   color: white;
 }
+
 
 /* Nadpis */
 h1 {
