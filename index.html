@@ -10,12 +10,16 @@
 <body>
 
   <h1>Matematický Solitaire</h1>
-<div style="
+
+<button onclick="toggleNavod()">📖 Zobrazit návod</button>
+
+<div id="navod" style="
+  display: none;
   background: white;
   color: black;
   padding: 15px;
   margin: 20px auto;
-  width: 60%;
+  width: 50%;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 ">
@@ -25,21 +29,13 @@
 ✅ Klikni na <b>Lízni kartu</b><br>
 ✅ Přetáhni kartu do sloupce<br>
 ✅ Do jednoho sloupce patří příklady se stejným výsledkem<br>
-✅ Karty můžeš kdykoliv přesouvat mezi sloupci<br>
+✅ Karty můžeš přesouvat mezi sloupci<br>
 ✅ Každý sloupec má mít 4 karty<br>
 ✅ Klikni na <b>Zkontrolovat</b><br>
-✅ <b>Nová hra</b> začne od začátku
+✅ <b>Nová hra</b> začne znovu
 
 </div>
-<p>
-🎮 Návod:<br>
-1. Klikni na "Lízni kartu".<br>
-2. Přetáhni kartu do libovolného sloupce.<br>
-3. Do jednoho sloupce patří příklady se stejným výsledkem.<br>
-4. Karty můžeš přesouvat mezi sloupci.<br>
-5. Na konci klikni na "Zkontrolovat".<br>
-6. Tlačítkem "Nová hra" začneš znovu.
-</p>
+
 
   <div id="sloupce">
     <div class="sloupec"></div>
