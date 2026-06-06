@@ -46,6 +46,15 @@ function lizniKartu() {
   let karta = document.createElement("div");
   karta.className = "karta";
   karta.innerText = aktualni.priklad;
+karta.dataset.v = aktualni.vysledek;
+karta.draggable = true;
+
+karta.addEventListener("dragstart", (e) => {
+  e.dataTransfer.setData("text/plain", JSON.stringify({
+    priklad: karta.innerText,
+    vysledek: karta.dataset.v
+  }));
+});
 
   // ✅ důležité
   karta.dataset.v = aktualni.vysledek;
@@ -74,7 +83,8 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
     e.preventDefault();
 
     let data = JSON.parse(e.dataTransfer.getData("text/plain"));
-
+if (!data) return;
+``
     let posledni = sloupec.lastElementChild;
 
     if (!posledni || posledni.dataset.v == data.vysledek) {
