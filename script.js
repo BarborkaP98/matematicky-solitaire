@@ -99,9 +99,25 @@ if (!data) return;
       aktualni = null;
       document.getElementById("aktualni-karta").innerHTML = "";
 
-    } else {
-      alert("Špatný tah!");
-    }
+sloupec.addEventListener("drop", (e) => {
+  e.preventDefault();
+
+  let dataText = e.dataTransfer.getData("text/plain");
+  if (!dataText) return;
+
+  let data = JSON.parse(dataText);
+
+  // ✅ vždy přidá kartu (bez podmínky)
+  let karta = document.createElement("div");
+  karta.className = "karta";
+  karta.innerText = data.priklad;
+  karta.dataset.v = data.vysledek;
+
+  sloupec.appendChild(karta);
+
+  aktualni = null;
+  document.getElementById("aktualni-karta").innerHTML = "";
+});
   });
 
 });
