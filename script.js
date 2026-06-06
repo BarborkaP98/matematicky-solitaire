@@ -49,34 +49,38 @@ function generuj() {
           priklad = `${a} - ${b}`;
         }
 
-      } else {
+      } 
+} else {
 
-        if (Math.random() < 0.5) {
-          // násobení
-          let delitele = [];
+  if (Math.random() < 0.5) {
+    // ✅ násobení
+    let delitele = [];
 
-          for (let i = 1; i <= 10; i++) {
-            if (v % i === 0) {
-              delitele.push(i);
-            }
-          }
+    for (let i = 1; i <= 10; i++) {
+      if (v % i === 0) {
+        delitele.push(i);
+      }
+    }
 
-          if (delitele.length === 0) continue;
+    if (delitele.length === 0) continue;
 
-          let a = delitele[Math.floor(Math.random() * delitele.length)];
-          let b = v / a;
+    let a = delitele[Math.floor(Math.random() * delitele.length)];
+    let b = v / a;
 
-          if (b > 10) continue;
+    if (b > 10) continue;
 
-          priklad = `${a} × ${b}`;
+    priklad = `${a} × ${b}`;
 
-        } else {
-  let b = rand(1, 10);
-  ÷ ${b}`;  let a = v * b;
+  } else {
+    // ✅ dělení (TOTO TAM MUSÍ BÝT!)
+    let b = rand(1, 10);
+    let a = v * b;
+
+    priklad = `${a} ÷ ${b}`;
+  }
+
 }
 
-
-      }
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
