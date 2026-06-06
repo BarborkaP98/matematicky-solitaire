@@ -3,6 +3,7 @@ let typPrikladu = "mix";
 let balicek = [];
 let aktualni = null;
 let tazenaKarta = null;
+let rezim = "plusminus"; // výchozí režim
 
 // náhodné číslo
 function rand(min, max) {
@@ -25,11 +26,25 @@ function generuj() {
 
     while (pocet < 4) {
 
-      let typ = Math.random() < 0.5 ? "plus" : "minus";
+     let typ;
+
+if (rezim === "plusminus") {
+  typ = Math.random() < 0.5 ? "plus" : "minus";
+}
+else if (rezim === "nasobeni") {
+  typ = "krat";
+}
+else if (rezim === "deleni") {
+  typ = "deleni";
+}
+else if (rezim === "mix") {
+  let moznosti = ["krat", "deleni"];
+  typ = moznosti[Math.floor(Math.random() * moznosti.length)];
+}
 
       let a, b, priklad;
 
- if (typ === "plus") {
+if (typ === "plus") {
   a = rand(0, v);
   b = v - a;
   priklad = `${a} + ${b}`;
@@ -38,6 +53,23 @@ else if (typ === "minus") {
   a = rand(v, maxCislo);
   b = a - v;
   priklad = `${a} - ${b}`;
+}
+else if (typ === "krat") {
+  // malá násobilka (např. do 10)
+  a = rand(1, 10);
+  b = rand(1, 10);
+  v = a * b;
+  priklad = `${a} × ${b}`;
+}
+else if (typ === "deleni") {
+  // vytvoříme dělení bez zbytku
+  b = rand(1, 10);
+  let vysl = rand(1, 10);
+  a = b * vysl;
+  v = vysl;
+  priklad = `${a} ÷ ${b}`;
+}
+``
 }
 
 
