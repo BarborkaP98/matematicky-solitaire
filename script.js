@@ -1,26 +1,27 @@
-let maxCislo = 20; // výchozí obtížnost
-let typPrikladu = "mix";
+let maxCislo = 20;
 let balicek = [];
 let aktualni = null;
 let tazenaKarta = null;
-let rezim = "plusminus"; // výchozí režim
+let rezim = "plusminus";
 
 // náhodné číslo
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+// ✅ generování balíčku (FINÁLNÍ VERZE)
 function generuj() {
   balicek = [];
 
   let vysledky = [];
 
-  // vytvoří 5 různých výsledků
   while (vysledky.length < 5) {
     let v;
 
     if (rezim === "plusminus") {
       v = rand(0, maxCislo);
     } else {
+      // malá násobilka → výsledky do 100
       v = rand(1, 10) * rand(1, 10);
     }
 
@@ -49,38 +50,36 @@ function generuj() {
           priklad = `${a} - ${b}`;
         }
 
-      
-} else {
+      } else {
 
-  if (Math.random() < 0.5) {
-    // ✅ násobení
-    let delitele = [];
+        if (Math.random() < 0.5) {
+          // ✅ násobení
+          let delitele = [];
 
-    for (let i = 1; i <= 10; i++) {
-      if (v % i === 0) {
-        delitele.push(i);
+          for (let i = 1; i <= 10; i++) {
+            if (v % i === 0) {
+              delitele.push(i);
+            }
+          }
+
+          if (delitele.length === 0) continue;
+
+          let a = delitele[Math.floor(Math.random() * delitele.length)];
+          let b = v / a;
+
+          if (b > 10) continue;
+
+          priklad = `${a} × ${b}`;
+
+        } else {
+          // ✅ dělení
+          let b = rand(1, 10);
+          let a = v * b;
+
+          priklad = `${a} ÷ ${b}`;
+        }
+
       }
-    }
-
-    if (delitele.length === 0) continue;
-
-    let a = delitele[Math.floor(Math.random() * delitele.length)];
-    let b = v / a;
-
-    if (b > 10) continue;
-
-    priklad = `${a} × ${b}`;
-
-  } else {
-    // ✅ dělení (TOTO TAM MUSÍ BÝT!)
-    let b = rand(1, 10);
-    let a = v * b;
-
-    priklad = `${a} ÷ ${b}`;
-  }
-
-}
-
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
@@ -97,7 +96,8 @@ function generuj() {
 
   balicek.sort(() => Math.random() - 0.5);
 }
-// ✅ vytvoří kartu (jedno místo = méně chyb)
+
+// ✅ vytvoření karty
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
@@ -134,7 +134,7 @@ function lizniKartu() {
   zona.appendChild(karta);
 }
 
-// ✅ drop do sloupců
+// ✅ drop
 document.querySelectorAll(".sloupec").forEach(sloupec => {
 
   sloupec.addEventListener("dragover", (e) => {
@@ -152,13 +152,11 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
     let novaKarta = vytvorKartu(data.priklad, data.vysledek);
     sloupec.appendChild(novaKarta);
 
-    // ✅ smaže původní AŽ po úspěšném dropu
     if (tazenaKarta) {
       tazenaKarta.remove();
       tazenaKarta = null;
     }
 
-    // ✅ vyčistí střed
     aktualni = null;
     document.getElementById("aktualni-karta").innerHTML = "";
   });
@@ -174,11 +172,10 @@ function zkontroluj() {
   sloupce.forEach(sloupec => {
     let karty = sloupec.children;
 
-    // reset barvy
     sloupec.style.backgroundColor = "rgba(255,255,255,0.2)";
 
     if (karty.length === 0) {
-      sloupec.style.backgroundColor = "#ff9999"; // červená
+      sloupec.style.backgroundColor = "#ff9999";
       vseSpravne = false;
       return;
     }
@@ -193,14 +190,12 @@ function zkontroluj() {
     }
 
     if (ok && karty.length === 4) {
-      sloupec.style.backgroundColor = "#8bc34a"; // zelená
-    } 
-    else if (ok) {
-      sloupec.style.backgroundColor = "#ffd54f"; // žlutá
+      sloupec.style.backgroundColor = "#8bc34a";
+    } else if (ok) {
+      sloupec.style.backgroundColor = "#ffd54f";
       vseSpravne = false;
-    } 
-    else {
-      sloupec.style.backgroundColor = "#ff9999"; // červená
+    } else {
+      sloupec.style.backgroundColor = "#ff9999";
       vseSpravne = false;
     }
   });
@@ -224,8 +219,18 @@ function novaHra() {
   generuj();
 }
 
-// start
-generuj();
+// ✅ režimy
+function nastavObtiznost(hodnota) {
+  maxCislo = hodnota;
+  novaHra();
+}
+
+function nastavRezim(r) {
+  rezim = r;
+  novaHra();
+}
+
+// ✅ návod toggle
 function toggleNavod() {
   let navod = document.getElementById("navod");
 
@@ -235,11 +240,6 @@ function toggleNavod() {
     navod.style.display = "none";
   }
 }
-function nastavObtiznost(hodnota) {
-  maxCislo = hodnota;
-  novaHra();
-}
-function nastavRezim(r) {
-  rezim = r;
-  novaHra();
-}
+
+// start
+generuj();
