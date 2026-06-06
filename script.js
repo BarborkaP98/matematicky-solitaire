@@ -6,8 +6,6 @@ let tazenaKarta = null;
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-// vytvoření balíčku
 function generuj() {
   balicek = [];
 
@@ -17,20 +15,46 @@ function generuj() {
     if (!vysledky.includes(v)) vysledky.push(v);
   }
 
-  vysledky.forEach(v => {
-    for (let i = 0; i < 4; i++) {
-      let a = rand(0, v);
-      let b = v - a;
+  let pouzite = new Set(); // ✅ hlídá duplicity
 
-      balicek.push({
-        priklad: a + " + " + b,
-        vysledek: v
-      });
+  vysledky.forEach(v => {
+
+    let pocet = 0;
+
+    while (pocet < 4) {
+
+      let typ = Math.random() < 0.5 ? "plus" : "minus";
+
+      let a, b, priklad;
+
+      if (typ === "plus") {
+        a = rand(0, v);
+        b = v - a;
+        priklad = `${a} + ${b}`;
+      } else {
+        a = rand(v, 20);
+        b = a - v;
+        priklad = `${a} - ${b}`;
+      }
+
+      // ✅ zajistí, že se příklad neopakuje
+      if (!pouzite.has(priklad)) {
+        pouzite.add(priklad);
+
+        balicek.push({
+          priklad: priklad,
+          vysledek: v
+        });
+
+        pocet++;
+      }
     }
   });
 
+  // zamíchání
   balicek.sort(() => Math.random() - 0.5);
 }
+
 
 // ✅ vytvoří kartu (jedno místo = méně chyb)
 function vytvorKartu(text, vysledek) {
