@@ -25,18 +25,7 @@ function generuj() {
 
     while (pocet < 4) {
 
-      let typ;
-
-if (typPrikladu === "plus") {
-  typ = "plus";
-} else if (typPrikladu === "minus") {
-  typ = "minus";
-} else if (typPrikladu === "nasobeni") {
-  typ = "krat";
-} else {
-  let moznosti = ["plus", "minus", "krat"];
-  typ = moznosti[Math.floor(Math.random() * moznosti.length)];
-}
+      let typ = Math.random() < 0.5 ? "plus" : "minus";
 
       let a, b, priklad;
 
@@ -50,23 +39,7 @@ else if (typ === "minus") {
   b = a - v;
   priklad = `${a} - ${b}`;
 }
-else if (typ === "krat") {
 
-  let delitele = [];
-
-  for (let i = 1; i <= v; i++) {
-    if (v % i === 0) {
-      delitele.push(i);
-    }
-  }
-
-  if (delitele.length === 0) continue;
-
-  a = delitele[Math.floor(Math.random() * delitele.length)];
-  b = v / a;
-
-  priklad = `${a} × ${b}`;
-}
 
       // ✅ zajistí, že se příklad neopakuje
       if (!pouzite.has(priklad)) {
