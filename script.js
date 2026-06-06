@@ -78,8 +78,8 @@ else if (typ === "deleni") {
   a = v * b;
 
   priklad = `${a} ÷ ${b}`;
+}      
 }
-      
 
 
       // ✅ zajistí, že se příklad neopakuje
