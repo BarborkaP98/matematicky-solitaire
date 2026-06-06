@@ -2,87 +2,68 @@ let balicek = [];
 let aktualni = null;
 
 // náhodné číslo
-function nahodneCislo(min, max) {
+function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// generování balíčku
-function generujBalicek() {
+// vytvoření balíčku
+function generuj() {
   balicek = [];
 
   let vysledky = [];
-
   while (vysledky.length < 5) {
-    let cislo = nahodneCislo(0, 100);
-    if (!vysledky.includes(cislo)) {
-      vysledky.push(cislo);
-    }
+    let v = rand(0, 20);
+    if (!vysledky.includes(v)) vysledky.push(v);
   }
 
-  vysledky.forEach(vysledek => {
-    let pocet = 0;
-
-    while (pocet < 4) {
-      let typ = Math.random() < 0.5 ? "plus" : "minus";
-      let a, b, priklad;
-
-      if (typ === "plus") {
-        a = nahodneCislo(0, vysledek);
-        b = vysledek - a;
-        priklad = `${a} + ${b}`;
-      } else {
-        a = nahodneCislo(vysledek, 100);
-        b = a - vysledek;
-        priklad = `${a} - ${b}`;
-      }
+  vysledky.forEach(v => {
+    for (let i = 0; i < 4; i++) {
+      let a = rand(0, v);
+      let b = v - a;
 
       balicek.push({
-        priklad: priklad,
-        vysledek: vysledek
+        priklad: a + " + " + b,
+        vysledek: v
       });
-
-      pocet++;
     }
   });
 
   balicek.sort(() => Math.random() - 0.5);
 }
 
-// líznutí karty
+// líznutí
 function lizniKartu() {
   if (balicek.length === 0) {
-    document.getElementById("aktualni-karta").innerText = "Konec hry!";
+    document.getElementById("aktualni-karta").innerText = "Konec hry";
     return;
   }
 
   aktualni = balicek.pop();
-
-  let div = document.getElementById("aktualni-karta");
-
-  div.innerHTML = "";
-
-  let karta = document.createElement("div");
-  karta.className = "karta";
-  karta.innerText = aktualni.priklad;
-
-  karta.draggable = true;
-
-  karta.addEventListener("dragstart", (e) => {
-    e.dataTransfer.setData("text/plain", JSON.stringify(aktualni));
-  });
-
-  div.appendChild(karta);
+  document.getElementById("aktualni-karta").innerText = aktualni.priklad;
 }
 
-// drop do sloupců
+// klikání na sloupce
 document.querySelectorAll(".sloupec").forEach(sloupec => {
-
-  sloupec.addEventListener("dragover", (e) => {
-    e.preventDefault();
-  });
-
-  sloupec.addEventListener("drop", (e) => {
-    e.preventDefault();
-
+  sloupec.onclick = () => {
     if (!aktualni) return;
 
+    let posledni = sloupec.lastElementChild;
+
+    if (!posledni || posledni.dataset.v == aktualni.vysledek) {
+
+      let div = document.createElement("div");
+      div.className = "karta";
+      div.innerText = aktualni.priklad;
+      div.dataset.v = aktualni.vysledek;
+
+      sloupec.appendChild(div);
+      aktualni = null;
+      document.getElementById("aktualni-karta").innerText = "";
+
+    } else {
+      alert("Špatný tah");
+    }
+  };
+});
+
+generuj();
