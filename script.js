@@ -1,3 +1,4 @@
+let maxCislo = 20; // výchozí obtížnost
 let balicek = [];
 let aktualni = null;
 let tazenaKarta = null;
@@ -11,7 +12,7 @@ function generuj() {
 
   let vysledky = [];
   while (vysledky.length < 5) {
-    let v = rand(0, 20);
+    let v = rand(0, maxCislo);
     if (!vysledky.includes(v)) vysledky.push(v);
   }
 
@@ -28,7 +29,7 @@ function generuj() {
       let a, b, priklad;
 
       if (typ === "plus") {
-        a = rand(0, v);
+        a = rand(v, maxCislo);
         b = v - a;
         priklad = `${a} + ${b}`;
       } else {
