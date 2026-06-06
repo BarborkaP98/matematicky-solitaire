@@ -79,9 +79,7 @@ else if (typ === "deleni") {
 
   priklad = `${a} ÷ ${b}`;
 }
-}
-``
-}
+      
 
 
       // ✅ zajistí, že se příklad neopakuje
