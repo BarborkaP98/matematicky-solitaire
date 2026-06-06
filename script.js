@@ -65,26 +65,35 @@ function lizniKartu() {
 ``
 // klikání na sloupce
 document.querySelectorAll(".sloupec").forEach(sloupec => {
-  sloupec.onclick = () => {
-    if (!aktualni) return;
+
+  sloupec.addEventListener("dragover", (e) => {
+    e.preventDefault(); // umožní drop
+  });
+
+  sloupec.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    let data = JSON.parse(e.dataTransfer.getData("text/plain"));
 
     let posledni = sloupec.lastElementChild;
 
-    if (!posledni || posledni.dataset.v == aktualni.vysledek) {
+    if (!posledni || posledni.dataset.v == data.vysledek) {
 
-      let div = document.createElement("div");
-      div.className = "karta";
-      div.innerText = aktualni.priklad;
-      div.dataset.v = aktualni.vysledek;
+      let karta = document.createElement("div");
+      karta.className = "karta";
+      karta.innerText = data.priklad;
+      karta.dataset.v = data.vysledek;
 
-      sloupec.appendChild(div);
+      sloupec.appendChild(karta);
+
       aktualni = null;
-      document.getElementById("aktualni-karta").innerText = "";
+      document.getElementById("aktualni-karta").innerHTML = "";
 
     } else {
-      alert("Špatný tah");
+      alert("Špatný tah!");
     }
-  };
+  });
+
 });
 
 generuj();
