@@ -13,19 +13,21 @@ function generuj() {
   balicek = [];
 
   let vysledky = [];
+
   while (vysledky.length < 5) {
     let v;
 
-if (rezim === "plusminus") {
-  v = rand(0, maxCislo);
-} else {
-  // malá násobilka → výsledek do 100
-  v = rand(1, 10) * rand(1, 10);
-}
+    if (rezim === "plusminus") {
+      v = rand(0, maxCislo);
+    } else {
+      // malá násobilka → výsledek do 100
+      v = rand(1, 10) * rand(1, 10);
+    }
+
     if (!vysledky.includes(v)) vysledky.push(v);
   }
 
-  let pouzite = new Set(); // ✅ hlídá duplicity
+  let pouzite = new Set();
 
   vysledky.forEach(v => {
 
@@ -33,80 +35,46 @@ if (rezim === "plusminus") {
 
     while (pocet < 4) {
 
-     let typ;
+      let typ;
 
-if (rezim === "plusminus") {
-  typ = Math.random() < 0.5 ? "plus" : "minus";
-}
-else if (rezim === "nasobeni") {
-  let moznosti = ["krat", "deleni"];
-  typ = moznosti[Math.floor(Math.random() * moznosti.length)];
-}
-if (rezim === "plusminus") {
-  typ = Math.random() < 0.5 ? "plus" : "minus";
-}
-else if (rezim === "nasobeni") {
-  typ = "krat";
-}
-else if (rezim === "deleni") {
-  typ = "deleni";
-}
-else if (rezim === "mix") {
-  let moznosti = ["krat", "deleni"];
-  typ = moznosti[Math.floor(Math.random() * moznosti.length)];
-}
+      if (rezim === "plusminus") {
+        typ = Math.random() < 0.5 ? "plus" : "minus";
+      } else {
+        let moznosti = ["krat", "deleni"];
+        typ = moznosti[Math.floor(Math.random() * moznosti.length)];
+      }
 
       let a, b, priklad;
 
-if (typ === "plus") {
-  a = rand(0, v);
-  b = v - a;
-  priklad = `${a} + ${b}`;
-}
-else if (typ === "minus") {
-  a = rand(v, maxCislo);
-  b = a - v;
-  priklad = `${a} - ${b}`;
-}
-else if (typ === "krat") {
-  a = rand(1, 10);
-  b = rand(1, 10);
-  priklad = `${a} × ${b}`;
-}
-``
-  // musí platit a * b = v
-  let delitele = [];
+      if (typ === "plus") {
+        a = rand(0, v);
+        b = v - a;
+        priklad = `${a} + ${b}`;
+      }
+      else if (typ === "minus") {
+        a = rand(v, maxCislo);
+        b = a - v;
+        priklad = `${a} - ${b}`;
+      }
+      else if (typ === "krat") {
+        a = rand(1, 10);
+        b = rand(1, 10);
+        let vysl = a * b;
 
-  for (let i = 1; i <= v; i++) {
-    if (v % i === 0) {
-      delitele.push(i);
-    }
-  }
+        if (vysl !== v) continue;
 
-  if (delitele.length === 0) continue;
+        priklad = `${a} × ${b}`;
+      }
+      else if (typ === "deleni") {
+        b = rand(1, 10);
+        let vysl = rand(1, 10);
+        a = b * vysl;
 
-  a = delitele[Math.floor(Math.random() * delitele.length)];
-  b = v / a;
+        if (vysl !== v) continue;
 
-  priklad = `${a} × ${b}`;
-}
+        priklad = `${a} ÷ ${b}`;
+      }
 
-else if (typ === "deleni") {
-  b = rand(1, 10);
-  let vysledek = rand(1, 10);
-  a = b * vysledek;
-  priklad = `${a} ÷ ${b}`;
-}
-  // musí platit a / b = v
-  b = rand(1, 10);
-  a = v * b;
-
-  priklad = `${a} ÷ ${b}`;
-}      
-}
-
-
-      // ✅ zajistí, že se příklad neopakuje
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
 
@@ -120,10 +88,8 @@ else if (typ === "deleni") {
     }
   });
 
-  // zamíchání
   balicek.sort(() => Math.random() - 0.5);
 }
-
 
 // ✅ vytvoří kartu (jedno místo = méně chyb)
 function vytvorKartu(text, vysledek) {
