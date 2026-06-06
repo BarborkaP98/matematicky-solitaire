@@ -33,7 +33,7 @@ function generuj() {
 
 // ✅ líznutí
 function lizniKartu() {
-  if (aktualni !== null) return;
+  
 
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
