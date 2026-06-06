@@ -1,15 +1,22 @@
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   text-align: center;
+  background: #2e7d32; /* zelené pozadí jako stůl */
+  color: white;
 }
 
-/* horní panely zmenšit */
-body > div {
-  margin: 10px;
+/* Nadpis */
+h1 {
+  margin: 10px 0;
 }
 
-/* sloupce */
+/* Sekce nahoře (tlačítka výběru) */
+div {
+  margin: 5px;
+}
+
+/* Sloupce */
 #sloupce {
   display: flex;
   justify-content: center;
@@ -17,29 +24,34 @@ body > div {
   margin: 10px;
 }
 
-/* samotný sloupec */
-
+/* Jednotlivý sloupec */
 .sloupec {
-  width: 100px;
-  min-height: 150px;
-  background: #d0f0c0;
-  border: 2px dashed #4caf50;
+  width: 90px;
+  height: 140px;
+  background: #c8e6c9;
+  border: 2px dashed #1b5e20;
   border-radius: 10px;
   padding: 5px;
+  transition: 0.3s;
 }
 
+/* Efekt při hover (bonus – hezké 🙂) */
+.sloupec:hover {
+  background: #a5d6a7;
+}
 
-/* karta */
+/* Karty */
 .karta {
   background: white;
   color: black;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 8px;
+  padding: 6px;
+  margin: 4px 0;
+  border-radius: 6px;
   font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* tlačítka */
+/* Tlačítka dole */
 #tlacitka {
   display: flex;
   justify-content: center;
@@ -47,16 +59,34 @@ body > div {
   margin: 10px;
 }
 
+/* Všechna tlačítka */
 button {
-  padding: 8px 15px;
+  padding: 6px 12px;
   font-size: 14px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
 }
 
-/* aktuální karta – zvedneme výš */
+/* Efekt tlačítek */
+button:hover {
+  opacity: 0.85;
+}
+
+/* Aktuální karta */
 #aktualni-karta {
   margin: 10px;
   min-height: 50px;
 }
+
+/* Návod (zmenšený) */
+#navod {
+  width: 40%;
+  padding: 10px;
+  margin: 10px auto;
+  background: white;
+  color: black;
+  border-radius: 10px;
+  font-size: 14px;
+}
+``
