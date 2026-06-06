@@ -14,7 +14,14 @@ function generuj() {
 
   let vysledky = [];
   while (vysledky.length < 5) {
-    let v = rand(0, maxCislo);
+    let v;
+
+if (rezim === "plusminus") {
+  v = rand(0, maxCislo);
+} else {
+  // malá násobilka → výsledek do 100
+  v = rand(1, 10) * rand(1, 10);
+}
     if (!vysledky.includes(v)) vysledky.push(v);
   }
 
@@ -28,6 +35,13 @@ function generuj() {
 
      let typ;
 
+if (rezim === "plusminus") {
+  typ = Math.random() < 0.5 ? "plus" : "minus";
+}
+else if (rezim === "nasobeni") {
+  let moznosti = ["krat", "deleni"];
+  typ = moznosti[Math.floor(Math.random() * moznosti.length)];
+}
 if (rezim === "plusminus") {
   typ = Math.random() < 0.5 ? "plus" : "minus";
 }
@@ -55,6 +69,11 @@ else if (typ === "minus") {
   priklad = `${a} - ${b}`;
 }
 else if (typ === "krat") {
+  a = rand(1, 10);
+  b = rand(1, 10);
+  priklad = `${a} × ${b}`;
+}
+``
   // musí platit a * b = v
   let delitele = [];
 
@@ -73,6 +92,11 @@ else if (typ === "krat") {
 }
 
 else if (typ === "deleni") {
+  b = rand(1, 10);
+  let vysledek = rand(1, 10);
+  a = b * vysledek;
+  priklad = `${a} ÷ ${b}`;
+}
   // musí platit a / b = v
   b = rand(1, 10);
   a = v * b;
