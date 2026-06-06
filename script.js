@@ -49,7 +49,7 @@ function generuj() {
           priklad = `${a} - ${b}`;
         }
 
-      } 
+      
 } else {
 
   if (Math.random() < 0.5) {
