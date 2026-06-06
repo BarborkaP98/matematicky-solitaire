@@ -198,3 +198,7 @@ function toggleNavod() {
     navod.style.display = "none";
   }
 }
+function nastavObtiznost(hodnota) {
+  maxCislo = hodnota;
+  novaHra();
+}
