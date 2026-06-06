@@ -128,3 +128,18 @@ function zkontroluj() {
 
 // start
 generuj();
+function novaHra() {
+
+  // vymaže sloupce
+  document.querySelectorAll(".sloupec").forEach(sloupec => {
+    sloupec.innerHTML = "";
+  });
+
+  // vymaže aktuální kartu
+  document.getElementById("aktualni-karta").innerHTML = "";
+
+  // reset balíčku
+  aktualni = null;
+  generuj();
+}
+
