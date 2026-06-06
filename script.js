@@ -49,31 +49,37 @@ function generuj() {
       if (typ === "plus") {
         a = rand(0, v);
         b = v - a;
-        priklad = `${a} + ${b}`;
+        priklad = `${a} + ${b};
       }
       else if (typ === "minus") {
         a = rand(v, maxCislo);
         b = a - v;
-        priklad = `${a} - ${b}`;
+        priklad = `${a} - ${b};
       }
-      else if (typ === "krat") {
-        a = rand(1, 10);
-        b = rand(1, 10);
-        let vysl = a * b;
+ else if (typ === "krat") {
+  // ✅ násobení správně (malá násobilka)
+  let delitele = [];
 
-        if (vysl !== v) continue;
+  for (let i = 1; i <= 10; i++) {
+    if (v % i === 0) {
+      delitele.push(i);
+    }
+  }
 
-        priklad = `${a} × ${b}`;
-      }
-      else if (typ === "deleni") {
-        b = rand(1, 10);
-        let vysl = rand(1, 10);
-        a = b * vysl;
+  if (delitele.length === 0) continue;
 
-        if (vysl !== v) continue;
+  let a = delitele[Math.floor(Math.random() * delitele.length)];
+  let b = v / a;
 
-        priklad = `${a} ÷ ${b}`;
-      }
+  if (b > 10) continue;
+
+  priklad = `${a} × ${b}`;
+}
+else if (typ === "deleni") {else if (typ === "deleni") = `${a} ÷ ${b}`;
+}
+  let b = rand(1, 10);
+  let a = v * b;
+
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
