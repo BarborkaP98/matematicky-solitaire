@@ -31,10 +31,10 @@ function generuj() {
   balicek.sort(() => Math.random() - 0.5);
 }
 
-// líznutí
-
+// ✅ líznutí
 function lizniKartu() {
   if (aktualni !== null) return;
+
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
     return;
@@ -48,86 +48,50 @@ function lizniKartu() {
   let karta = document.createElement("div");
   karta.className = "karta";
   karta.innerText = aktualni.priklad;
-karta.dataset.v = aktualni.vysledek;
-karta.draggable = true;
 
-karta.addEventListener("dragstart", (e) => {
-  e.dataTransfer.setData("text/plain", JSON.stringify({
-    priklad: karta.innerText,
-    vysledek: karta.dataset.v
-  }));
-});
-
-  // ✅ důležité
   karta.dataset.v = aktualni.vysledek;
-
-  // ✅ zapnutí drag
   karta.draggable = true;
 
   karta.addEventListener("dragstart", (e) => {
     e.dataTransfer.setData("text/plain", JSON.stringify({
-      priklad: aktualni.priklad,
-      vysledek: aktualni.vysledek
+      priklad: karta.innerText,
+      vysledek: karta.dataset.v
     }));
   });
 
   zona.appendChild(karta);
 }
-``
-// klikání na sloupce
+
+// ✅ drop (bez blokování chyb)
 document.querySelectorAll(".sloupec").forEach(sloupec => {
 
   sloupec.addEventListener("dragover", (e) => {
-    e.preventDefault(); // umožní drop
+    e.preventDefault();
   });
 
   sloupec.addEventListener("drop", (e) => {
     e.preventDefault();
 
-    let data = JSON.parse(e.dataTransfer.getData("text/plain"));
-if (!data) return;
-``
-    let posledni = sloupec.lastElementChild;
+    let dataText = e.dataTransfer.getData("text/plain");
+    if (!dataText) return;
 
-    if (!posledni || posledni.dataset.v == data.vysledek) {
+    let data = JSON.parse(dataText);
 
-      let karta = document.createElement("div");
-      karta.className = "karta";
-      karta.innerText = data.priklad;
-      karta.dataset.v = data.vysledek;
+    let karta = document.createElement("div");
+    karta.className = "karta";
+    karta.innerText = data.priklad;
+    karta.dataset.v = data.vysledek;
 
-      sloupec.appendChild(karta);
+    sloupec.appendChild(karta);
 
-      sloupec.appendChild(karta);
-
-document.getElementById("aktualni-karta").innerHTML =
-      document.getElementById("aktualni-karta").innerHTML = "";
-aktualni = null;
-sloupec.addEventListener("drop", (e) => {
-  e.preventDefault();
-
-  let dataText = e.dataTransfer.getData("text/plain");
-  if (!dataText) return;
-
-  let data = JSON.parse(dataText);
-
-  // ✅ vždy přidá kartu (bez podmínky)
-  let karta = document.createElement("div");
-  karta.className = "karta";
-  karta.innerText = data.priklad;
-  karta.dataset.v = data.vysledek;
-
-  sloupec.appendChild(karta);
-
-  aktualni = null;
-  document.getElementById("aktualni-karta").innerHTML = "";
-  aktualni = null;
-});
+    // reset
+    aktualni = null;
+    document.getElementById("aktualni-karta").innerHTML = "";
   });
 
 });
 
-generuj();
+// ✅ kontrola
 function zkontroluj() {
   let sloupce = document.querySelectorAll(".sloupec");
 
@@ -141,18 +105,18 @@ function zkontroluj() {
       return;
     }
 
-    let prvniVysledek = karty[0].dataset.v;
-    let vseOk = true;
+    let prvni = karty[0].dataset.v;
+    let ok = true;
 
     for (let i = 1; i < karty.length; i++) {
-      if (karty[i].dataset.v != prvniVysledek) {
-        vseOk = false;
+      if (karty[i].dataset.v != prvni) {
+        ok = false;
       }
     }
 
-    if (vseOk && karty.length === 4) {
-      zprava += "Sloupec " + (index + 1) + ": ✅ " + prvniVysledek + "\n";
-    } else if (vseOk) {
+    if (ok && karty.length === 4) {
+      zprava += "Sloupec " + (index + 1) + ": ✅ " + prvni + "\n";
+    } else if (ok) {
       zprava += "Sloupec " + (index + 1) + ": ⚠️ neúplný\n";
     } else {
       zprava += "Sloupec " + (index + 1) + ": ❌ špatně\n";
@@ -161,3 +125,6 @@ function zkontroluj() {
 
   alert(zprava);
 }
+
+// start
+generuj();
