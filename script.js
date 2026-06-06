@@ -70,31 +70,33 @@ generuj();
 function zkontroluj() {
   let sloupce = document.querySelectorAll(".sloupec");
 
-  let vysledky = [];
+  let zprava = "Výsledky:\n";
 
-  sloupce.forEach(sloupec => {
+  sloupce.forEach((sloupec, index) => {
     let karty = sloupec.children;
 
     if (karty.length === 0) {
-      vysledky.push("❌ prázdný");
+      zprava += "Sloupec " + (index + 1) + ": ❌ prázdný\n";
       return;
     }
 
-    let spravne = true;
-    let prvni = karty[0].dataset.v;
+    let prvniVysledek = karty[0].dataset.v;
+    let vseOk = true;
 
-    for (let i = 0; i < karty.length; i++) {
-      if (karty[i].dataset.v != prvni) {
-        spravne = false;
+    for (let i = 1; i < karty.length; i++) {
+      if (karty[i].dataset.v != prvniVysledek) {
+        vseOk = false;
       }
     }
 
-    if (spravne) {
-      vysledky.push("✅ " + prvni);
+    if (vseOk && karty.length === 4) {
+      zprava += "Sloupec " + (index + 1) + ": ✅ " + prvniVysledek + "\n";
+    } else if (vseOk) {
+      zprava += "Sloupec " + (index + 1) + ": ⚠️ neúplný\n";
     } else {
-      vysledky.push("❌ špatně");
+      zprava += "Sloupec " + (index + 1) + ": ❌ špatně\n";
     }
   });
 
-  alert("Výsledky:\n" + vysledky.join("\n"));
+  alert(zprava);
 }
