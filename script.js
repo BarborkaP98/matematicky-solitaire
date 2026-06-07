@@ -175,7 +175,6 @@ function toggleNavod() {
   let n = document.getElementById("navod");
   n.style.display = n.style.display === "none" ? "block" : "none";
 }
-``
 let balicek = [];
 let tazenaKarta = null;
 let vybranaKarta = null;
