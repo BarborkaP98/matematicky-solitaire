@@ -1,3 +1,4 @@
+let vybranaKarta = null;
 let maxCislo = 20;let maxCislo =k = [];
 let tazenaKarta = null;
 let rezim = "plusminus";
@@ -70,7 +71,12 @@ function vytvorKartu(text, vysledek) {
 
   karta.addEventListener("dragstart", () => {
     tazenaKarta = karta;
+
   });
+// ✅ mobil – vybere kartu// ✅ mobil –arta.addEventListener("click", () => {
+  vybranaKarta = karta;
+});
+
 
   return karta;
 }
@@ -110,6 +116,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("aktualni-karta").innerHTML = "";
     });
+   // ✅ mobil – klikni karta → klikni sloupec
+sloupec.addEventListener("click", () => {
+  if (!vybranaKarta) return;
+
+  if (sloupec.querySelectorAll(".karta").length === 0) {
+    let nadpis = document.createElement("div");
+    nadpis.innerText = vybranaKarta.dataset.v;
+    nadpis.style.fontWeight = "bold";
+    sloupec.appendChild(nadpis);
+  }
+
+  sloupec.appendChild(vybranaKarta);
+  vybranaKarta = null;
+
+  document.getElementById("aktualni-karta").innerHTML = "";
+}); 
   });
 
   generuj();
