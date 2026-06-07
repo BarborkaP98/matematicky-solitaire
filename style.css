@@ -6,6 +6,20 @@ body {
   color: white;
 }
 
+/* ✅ všechny horní bloky */
+body > div {
+  margin: 10px;
+}
+
+/* ✅ tlačítkové skupiny (obtížnost + režim) */
+body > div:not(#sloupce):not(#aktualni-karta) {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* sloupce vedle sebe */
 #sloupce {
   display: flex;
   justify-content: center;
@@ -13,6 +27,7 @@ body {
   margin: 20px;
 }
 
+/* sloupec */
 .sloupec {
   width: 100px;
   min-height: 200px;
@@ -22,6 +37,7 @@ body {
   padding: 5px;
 }
 
+/* karta */
 .karta {
   background: white;
   color: black;
@@ -30,11 +46,11 @@ body {
   border-radius: 8px;
 }
 
+/* tlačítka */
 #tlacitka {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 10px;
 }
 
 button {
@@ -44,13 +60,17 @@ button {
   cursor: pointer;
 }
 
+/* karta nahoře */
 #aktualni-karta {
   margin: 10px;
   min-height: 50px;
 }
-.radek {
-  justify-content: center;  display: flex;
-  gap: 10px;
-  margin: 10px;
-  flex-wrap: wrap;
+
+/* návod */
+#navod {
+  max-width: 400px;
+  margin: 10px auto;
+  background: rgba(255,255,255,0.2);
+  padding: 10px;
+  border-radius: 8px;
 }
