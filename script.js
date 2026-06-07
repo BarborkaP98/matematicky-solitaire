@@ -202,9 +202,6 @@ function novaHra() {
   generuj();
 }
 
-  aktualni = null;
-  generuj();
-}
 
 // ✅ režimy
 function nastavObtiznost(hodnota) {
