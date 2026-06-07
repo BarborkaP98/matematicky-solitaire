@@ -1,6 +1,5 @@
 let maxCislo = 20;
-let balicek = [];
-let aktualni = null;
+let balicek =;let balicek = [];
 let tazenaKarta = null;
 let rezim = "plusminus";
 
@@ -11,21 +10,13 @@ function rand(min, max) {
 function generuj() {
   balicek = [];
 
-  let pouzite = new Set();
-
   for (let sl = 0; sl < 5; sl++) {
 
-    let v;
+    let v = (rezim === "plusminus") 
+      ? rand(0, maxCislo) 
+      : rand(1, 10);
 
-    if (rezim === "plusminus") {
-      v = rand(0, maxCislo);
-    } else {
-      v = rand(1, 10); // ✅ malé výsledky pro násobilku
-    }
-
-    let pocet = 0;
-
-    while (pocet < 4) {
+    for (let i = 0; i < 4; i++) {
 
       let priklad;
 
@@ -44,29 +35,19 @@ function generuj() {
       } else {
 
         if (Math.random() < 0.5) {
-          // ✅ násobení odpovídající v
-          let delitele = [];
+          // ✅ násobení – VŽDY odpovídá v
+          let a = rand(1, 10);
 
-          for (let i = 1; i <= 10; i++) {
-            if (v % i === 0) {
-              delitele.push(i);
-            }
-          }
-
-          let a;
-
-          if (delitele.length === 0) {
-            a = 1;
+          if (v % a === 0) {
+            let b = v / a;
+            priklad = `${a} × ${b}`;
           } else {
-            a = delitele[Math.floor(Math.random() * delitele.length)];
+            // fallback (vždy správný)
+            priklad = `1 × ${v}`;
           }
-
-          let b = v / a;
-
-          priklad = `${a} × ${b}`;
 
         } else {
-          // ✅ dělení
+          // ✅ dělení – VŽDY odpovídá v
           let b = rand(1, 10);
           let a = v * b;
 
@@ -75,16 +56,10 @@ function generuj() {
 
       }
 
-      if (!pouzite.has(priklad)) {
-        pouzite.add(priklad);
-
-        balicek.push({
-          priklad: priklad,
-          vysledek: v
-        });
-
-        pocet++;
-      }
+      balicek.push({
+        priklad: priklad,
+        vysledek: v
+      });
     }
   }
 
@@ -178,17 +153,17 @@ function zkontroluj() {
     let ok = true;
 
     for (let i = 1; i < karty.length; i++) {
-      if (karty[i].dataset.v != prvni) {
-        ok = false;
-      }
+      if (karty[i].dataset.v != prvni) ok = false;
     }
 
     if (ok && karty.length === 4) {
       sloupec.style.backgroundColor = "#8bc34a";
-    } else if (ok) {
+    } 
+    else if (ok) {
       sloupec.style.backgroundColor = "#ffd54f";
       vseSpravne = false;
-    } else {
+    } 
+    else {
       sloupec.style.backgroundColor = "#ff9999";
       vseSpravne = false;
     }
@@ -227,11 +202,7 @@ function nastavRezim(r) {
 function toggleNavod() {
   let navod = document.getElementById("navod");
 
-  if (navod.style.display === "none") {
-    navod.style.display = "block";
-  } else {
-    navod.style.display = "none";
-  }
+  navod.style.display = (navod.style.display === "none") ? "block" : "none";
 }
 
 // start
