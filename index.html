@@ -1,76 +1,33 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>Matematický Solitaire</title>
-
+  <meta charset="UTF-8>  <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
-
 </head>
+
 <body>
 
-  <h1>Matematický Solitaire</h1>
-<div style="margin: 20px;">
+<h1>Karetní hra</h1>
 
-<b>Vyber úroveň:</b><br><br>
-
-<button onclick="nastavObtiznost(20)">🟢 Do 20</button>
-<button onclick="nastavObtiznost(100)">🟡 Do 100</button>
-<button onclick="nastavObtiznost(1000)">🔴 Do 1000</button>
-
-</div>
-<div style="margin: 20px;">
-
-<b>Vyber typ:</b><br><br>
-
-<button onclick="nastavRezim('plusminus')">➕➖ Sčítání + odčítání</button>
-<button onclick="nastavRezim('nasobeni')">✖️ Násobilka + dělení</button>
-
-</div>
-
-<button onclick="toggleNavod()">📖 Zobrazit návod</button>
-
-<div id="navod" style="
-  display: none;
-  background: white;
-  color: black;
-  padding: 10px;
-  margin: 10px auto;
-  width: 40%;
-  border-radius: 10px;
-  font-size: 14px
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-">
-
-<b>🎮 Jak hrát:</b><br><br>
-
-✅ Klikni na <b>Lízni kartu</b><br>
-✅ Přetáhni kartu do sloupce<br>
-✅ Do jednoho sloupce patří příklady se stejným výsledkem<br>
-✅ Karty můžeš přesouvat mezi sloupci<br>
-✅ Klikni na <b>Zkontrolovat</b><br>
-✅ <b>Nová hra</b> začne znovu
-
-</div>
-
-
-  <div id="sloupce">
-    <div class="sloupec"></div>
-    <div class="sloupec"></div>
-    <div class="sloupec"></div>
-    <div class="sloupec"></div>
-    <div class="sloupec"></div>
-  </div>
 <div id="tlacitka">
   <button onclick="lizniKartu()">Lízni kartu</button>
-  <button onclick="zkontroluj()">Zkontrolovat</button>
+  <button onclick="zkontroluj()">Zkontroluj</button>
   <button onclick="novaHra()">Nová hra</button>
 </div>
 
-  
-  <div id="aktualni-karta"></div>
+<!-- karta -->
+<div id="aktualni-karta"></div>
 
-  <script src="script.js"></script>
+<!-- sloupce -->
+<div id="sloupce">
+  <div class="sloupec"></div>
+  <div class="sloupec"></div>
+  <div class="sloupec"></div>
+  <div class="sloupec"></div>
+  <div class="sloupec"></div>
+</div>
+
+<script src="script.js" defer></script>
 
 </body>
 </html>
