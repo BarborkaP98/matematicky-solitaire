@@ -20,7 +20,7 @@ for (let sl = 0; sl < 5; sl++) {
   let v;
 
   if (rezim === "plusminus") {
-    v = rand(0, maxCislo);
+    
   } else {
     v = rand(1, 10);  // ✅ jen malé výsledky!!
   }
@@ -34,7 +34,6 @@ for (let sl = 0; sl < 5; sl++) {
       if (rezim === "plusminus") {
 
         // ✅ normální režim
-        v = rand(0, maxCislo);
 
         if (Math.random() < 0.5) {
           let a = rand(0, v);
