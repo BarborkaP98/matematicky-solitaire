@@ -1,31 +1,50 @@
-let maxCislo = 20;let maxCisv}`;
-          }
+let maxCislo = 20;
+let balicek = [];
+let tazenaKarta = null;
+let rezim = "plusminus";
+
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generuj() {
+  balicek = [];
+
+  let vysledky = [];
+
+  while (vysledky.length < 5) {
+    let v = rezim === "plusminus"
+      ? rand(0, maxCislo)
+      : rand(1, 10);
+
+    if (!vysledky.includes(v)) vysledky.push(v);
+  }
+
+  vysledky.forEach(v => {
+    let pouzite = [];
+
+    while (pouzite.length < 4) {
+
+      let priklad;
+
+      if (rezim === "plusminus") {
+        if (Math.random() < 0.5) {
+          let a = rand(0, v);
+          let b = v - a;
+          priklad = `${a} + ${b}`;
         } else {
-          let b = rand(1, 10);
-          let a = v * b;
-          priklad = `${a} ÷ ${b}`;
+          let a = rand(v, maxCislo);
+          let b = a - v;
+          priklad = `${a} - ${b}`;
         }
-      }
-
-      if (!pouzite.includes(priklad)) {
-        pouzite.push(priklad);
-
-        balicek.push({
-          priklad: priklad,
-          vysledek: v
-        });
-      }
-    }
-  });
-
-  balicek.sort(() => Math.random() - 0.5);
+      } else {
+        if 0.5);        if (Math.random() < 0.5) {
 }
 
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
   karta.innerText = text;
-
   karta.dataset.v = vysledek;
   karta.draggable = true;
 
@@ -42,12 +61,11 @@ function lizniKartu() {
     return;
   }
 
-  aktualni = balicek.pop();
+  let karta = balicek.pop();
 
   let zona = document.getElementById("aktualni-karta");
   zona.innerHTML = "";
-
-  zona.appendChild(vytvorKartu(aktualni.priklad, aktualni.vysledek));
+  zona.appendChild(vytvorKartu(karta.priklad, karta.vysledek));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -81,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function zkontroluj() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
-
     let karty = sloupec.querySelectorAll(".karta");
 
     if (karty.length === 0) {
@@ -121,50 +138,31 @@ function nastavRezim(r) {
   rezim = r;
   novaHra();
 }
-let balicek = [];
-let aktualni = null;
-let tazenaKarta = null;
-let rezim = "plusminus";
 
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function toggleNavod() {
+  let n = document.getElementById("navod");
+  n.style.display = n.style.display === "none" ? "block" : "none";
 }
-
-function generuj() {
-  balicek = [];
-
-  let vysledky = [];
-
-  while (vysledky.length < 5) {
-    let v = rezim === "plusminus"
-      ? rand(0, maxCislo)
-      : rand(1, 10);
-
-    if (!vysledky.includes(v)) vysledky.push(v);
-  }
-
-  vysledky.forEach(v => {
-    let pouzite = [];
-
-    while (pouzite.length < 4) {
-
-      let priklad;
-
-      if (rezim === "plusminus") {
-        if (Math.random() < 0.5) {
-          let a = rand(0, v);
-          let b = v - a;
-          priklad = `${a} + ${b}`;
-        } else {
-          let a = rand(v, maxCislo);
-          let b = a - v;
-          priklad = `${a} - ${b}`;
-        }
-      } else {
-        if (Math.random() < 0.5) {
           let a = rand(1, 10);
 
           if (v % a === 0) {
             let b = v / a;
             priklad = `${a} × ${b}`;
           } else {
+            priklad = `1 × ${v}`;
+          }
+        } else {
+          let b = rand(1, 10);
+          let a = v * b;
+          priklad = `${a} ÷ ${b}`;
+        }
+      }
+
+      if (!pouzite.includes(priklad)) {
+        pouzite.push(priklad);
+
+        balicek.push({ priklad, vysledek: v });
+      }
+    }
+  });
+
