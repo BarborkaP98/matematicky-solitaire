@@ -1,6 +1,4 @@
-alert("JS běží");
-let maxCislo = 20;
-let balicek = [];
+let maxCislo = 20;let maxCislo =k = [];
 let tazenaKarta = null;
 let rezim = "plusminus";
 
@@ -10,7 +8,6 @@ function rand(min, max) {
 
 function generuj() {
   balicek = [];
-
   let vysledky = [];
 
   while (vysledky.length < 5) {
@@ -22,7 +19,6 @@ function generuj() {
   }
 
   vysledky.forEach(v => {
-
     let pouzite = [];
 
     while (pouzite.length < 4) {
@@ -42,7 +38,6 @@ function generuj() {
       } else {
         if (Math.random() < 0.5) {
           let a = rand(1, 10);
-
           if (v % a === 0) {
             let b = v / a;
             priklad = `${a} × ${b}`;
@@ -58,7 +53,6 @@ function generuj() {
 
       if (!pouzite.includes(priklad)) {
         pouzite.push(priklad);
-
         balicek.push({ priklad, vysledek: v });
       }
     }
@@ -95,7 +89,6 @@ function lizniKartu() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
     sloupec.addEventListener("dragover", e => e.preventDefault());
@@ -117,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("aktualni-karta").innerHTML = "";
     });
-
   });
 
   generuj();
