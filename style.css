@@ -48,3 +48,9 @@ button {
   margin: 10px;
   min-height: 50px;
 }
+.radek {
+  justify-content: center;  display: flex;
+  gap: 10px;
+  margin: 10px;
+  flex-wrap: wrap;
+}
