@@ -1,80 +1,39 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   text-align: center;
-  background: linear-gradient(to bottom, #42a5f5, #1e88e5);
-  color: white;
-}
-
-/* sloupce */
-#sloupce {
-  display: flex;
-  justify-content: center;
+  background:;  background: linear-gradient(#42a5f5, #1e88e5);
   gap: 10px;
   margin: 10px;
 }
 
-/* sloupec */
 .sloupec {
   width: 90px;
   min-height: 220px;
-
   background: #c8e6c9;
   border: 2px dashed #1b5e20;
   border-radius: 10px;
-
   padding: 5px;
-
   display: flex;
   flex-direction: column;
 }
 
-/* karta */
 .karta {
   background: white;
   color: black;
-
   width: 100%;
-  box-sizing: border-box;
-
   text-align: center;
-
   padding: 6px;
   margin: 4px 0;
-
   border-radius: 6px;
   font-size: 14px;
-
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-
   cursor: grab;
-  user-select: none;
 }
 
-/* tlačítka */
 #tlacitka {
+  margin: 10px;
+}
+  color: white;
+}
+
+#sloupce {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px;
-}
-
-button {
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-}
-
-/* karta uprostřed */
-#aktualni-karta {
-  margin: 10px;
-  min-height: 50px;
-}
-
-/* nadpis sloupce (výsledek) */
-.sloupec div:first-child {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
