@@ -1,4 +1,4 @@
-let maxCislo = 20;let maxClet balicek = [];
+let maxCislo = 20;let maxCislo =  = [];
 let tazenaKarta = null;
 let vybranaKarta = null;
 let rezim = "plusminus";
@@ -21,7 +21,6 @@ function generuj() {
   }
 
   vysledky.forEach(v => {
-
     let pouzite = [];
 
     while (pouzite.length < 4) {
@@ -65,7 +64,7 @@ function generuj() {
   balicek.sort(() => Math.random() - 0.5);
 }
 
-// ✅ karta
+// karta
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
@@ -78,19 +77,15 @@ function vytvorKartu(text, vysledek) {
     tazenaKarta = karta;
   });
 
-  // mobil výběr
+  // mobil + klik fallback
   karta.addEventListener("click", () => {
-    vybranaKarta = karta;
-  });
-
-  karta.addEventListener("touchstart", () => {
     vybranaKarta = karta;
   });
 
   return karta;
 }
 
-// ✅ lízni
+// lízni
 function lizniKartu() {
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
@@ -108,22 +103,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
-    // ✅ PC drag
+    // PC drag
     sloupec.addEventListener("dragover", e => e.preventDefault());
 
     sloupec.addEventListener("drop", e => {
       e.preventDefault();
       if (!tazenaKarta) return;
-
-      vlozDoSloupce(sloupec, tazenaKarta);
+      vloz(sloupec, tazenaKarta);
       tazenaKarta = null;
     });
 
-    // ✅ MOBIL + fallback klik
+    // klik (funguje i na mobilu!)
     sloupec.addEventListener("click", () => {
       if (!vybranaKarta) return;
-
-      vlozDoSloupce(sloupec, vybranaKarta);
+      vloz(sloupec, vybranaKarta);
       vybranaKarta = null;
     });
 
@@ -132,8 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
   generuj();
 });
 
-// ✅ společná logika (NEZDVOJUJEME = méně chyb)
-function vlozDoSloupce(sloupec, karta) {
+// společná funkce
+function vloz(sloupec, karta) {
 
   if (sloupec.querySelectorAll(".karta").length === 0) {
     let nadpis = document.createElement("div");
@@ -146,7 +139,7 @@ function vlozDoSloupce(sloupec, karta) {
   document.getElementById("aktualni-karta").innerHTML = "";
 }
 
-// ✅ kontrola
+// kontrola
 function zkontroluj() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
