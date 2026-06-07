@@ -50,7 +50,16 @@ button {
 }
 
 /* sloupec */
+#sloupce {
+  display:: center;  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+
 .sloupec {
   width: 100px;
-  min-height: 200px;
+  height: 200px;
   background: #c8e6c9;
+  border: 2px dashed #2e7d32;
+  border-radius: 10px;
+}
