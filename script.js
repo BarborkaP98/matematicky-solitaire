@@ -15,12 +15,19 @@ function generuj() {
 
   let pouzite = new Set();
 
-  for (let sl = 0; sl < 5; sl++) {
+for (let sl = 0; sl < 5; sl++) {
 
-    let v;
-    let pocet = 0;
+  let v;
 
-    while (pocet < 4) {
+  if (rezim === "plusminus") {
+    v = rand(0, maxCislo);
+  } else {
+    v = rand(1, 10);  // ✅ jen malé výsledky!!
+  }
+
+  let pocet = 0;
+
+  while (pocet < 4) {
 
       let priklad;
 
@@ -47,7 +54,7 @@ function generuj() {
           let a = rand(1, 10);
           let b = rand(1, 10);
 
-          v = a * b;
+         
           priklad = `${a} × ${b}`;
 
         } else {
@@ -56,7 +63,6 @@ function generuj() {
 
           let a = b * vysledek;
 
-          v = vysledek;
           priklad = `${a} ÷ ${b}`;
         }
       }
