@@ -28,6 +28,7 @@ div {
 
 /* Jednotlivý sloupec */
 .sloupec {.slou100px;
+  width: 90px;
   min-height:220px;
   background: #c8e6c9;
   border: 2px dashed #1b5e20;
