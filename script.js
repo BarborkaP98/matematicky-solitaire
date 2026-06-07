@@ -49,22 +49,26 @@ for (let sl = 0; sl < 5; sl++) {
 
         // ✅ násobilkový režim BEZ while problémů
 
-        if (Math.random() < 0.5) {
-          let a = rand(1, 10);
-          let b = rand(1, 10);
+if (Math.random() < 0.5) {
+  // ✅ násobení odpovídající v  for (let i = 1; i <= 10; i++) {  // ✅ násobení odpovídající v
+    if (v % i === 0) {
+      delitele.push(i);
+    }
+  }
 
-         
-          priklad = `${a} × ${b}`;
+  if (delitele.length === 0) continue;
 
-        } else {
-          let b = rand(1, 10);
-          let vysledek = rand(1, 10);
+  let a = delitele[Math.floor(Math.random() * delitele.length)];
+  let b = v / a;
 
-          let a = b * vysledek;
+  if (b > 10) continue;
 
-          priklad = `${a} ÷ ${b}`;
-        }
-      }
+  priklad = `${a} × ${b}`;
+}
+``
+  let delitele = [];
+
+
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
