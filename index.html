@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8>  <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <title>Karetní hra</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 
 <body>
 
 <h1>Karetní hra</h1>
 
+<!-- obtížnost -->
+<div>
+  Do 10 <button onclick="nastavObtiznost(10)">Do 10</button>
+  <button onclick="nastavObtiznost(20)">Do 20</button>
+  <button onclick="nastavObtiznost(100)">Do 100</button>
+</div>
+
+<!-- režim -->
+<div>
+  <button onclick="nastavRezim('plusminus')">+ −</button>
+  <button onclick="nastavRezim('nasobeni')">× ÷</button>
+</div>
+
+<!-- tlačítka -->
 <div id="tlacitka">
   <button onclick="lizniKartu()">Lízni kartu</button>
   <button onclick="zkontroluj()">Zkontroluj</button>
@@ -18,7 +34,7 @@
 <!-- karta -->
 <div id="aktualni-karta"></div>
 
-<!-- sloupce -->
+<!-- ✅ důležité -->
 <div id="sloupce">
   <div class="sloupec"></div>
   <div class="sloupec"></div>
@@ -26,8 +42,6 @@
   <div class="sloupec"></div>
   <div class="sloupec"></div>
 </div>
-
-<script src="script.js" defer></script>
 
 </body>
 </html>
