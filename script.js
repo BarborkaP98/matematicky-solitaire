@@ -21,6 +21,7 @@ function generuj() {
   }
 
   vysledky.forEach(v => {
+
     let pouzite = [];
 
     while (pouzite.length < 4) {
@@ -38,7 +39,34 @@ function generuj() {
           priklad = `${a} - ${b}`;
         }
       } else {
-        if 0.5);        if (Math.random() < 0.5) {
+        if (Math.random() < 0.5) {
+          let a = rand(1, 10);
+
+          if (v % a === 0) {
+            let b = v / a;
+            priklad = `${a} × ${b}`;
+          } else {
+            priklad = `1 × ${v}`;
+          }
+        } else {
+          let b = rand(1, 10);
+          let a = v * b;
+          priklad = `${a} ÷ ${b}`;
+        }
+      }
+
+      if (!pouzite.includes(priklad)) {
+        pouzite.push(priklad);
+
+        balicek.push({
+          priklad,
+          vysledek: v
+        });
+      }
+    }
+  });
+
+  balicek.sort(() => Math.random() - 0.5);
 }
 
 function vytvorKartu(text, vysledek) {
@@ -61,11 +89,11 @@ function lizniKartu() {
     return;
   }
 
-  let karta = balicek.pop();
+  let k = balicek.pop();
 
   let zona = document.getElementById("aktualni-karta");
   zona.innerHTML = "";
-  zona.appendChild(vytvorKartu(karta.priklad, karta.vysledek));
+  zona.appendChild(vytvorKartu(k.priklad, k.vysledek));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -99,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function zkontroluj() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
+
     let karty = sloupec.querySelectorAll(".karta");
 
     if (karty.length === 0) {
@@ -143,26 +172,3 @@ function toggleNavod() {
   let n = document.getElementById("navod");
   n.style.display = n.style.display === "none" ? "block" : "none";
 }
-          let a = rand(1, 10);
-
-          if (v % a === 0) {
-            let b = v / a;
-            priklad = `${a} × ${b}`;
-          } else {
-            priklad = `1 × ${v}`;
-          }
-        } else {
-          let b = rand(1, 10);
-          let a = v * b;
-          priklad = `${a} ÷ ${b}`;
-        }
-      }
-
-      if (!pouzite.includes(priklad)) {
-        pouzite.push(priklad);
-
-        balicek.push({ priklad, vysledek: v });
-      }
-    }
-  });
-
