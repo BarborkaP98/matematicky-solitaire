@@ -70,6 +70,10 @@ button {
 
 /* ✅ karta nahoře */
 #aktualni-karta {
-  margin: 10px;
+  margin: 10px auto;
   min-height: 50px;
+  width: 200px;          /* ✅ pevná šířka */
+}
+#aktualni-karta .karta {
+  margin: 0 auto;
 }
