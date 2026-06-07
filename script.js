@@ -1,17 +1,4 @@
-let maxCislo = 20;
-let balicek = [];
-let tazenaKarta = null;
-let rezim = "plusminus";
-let vybranaKarta = null;   // ✅ pro mobil (klikání)
-
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function generuj() {
-  balicek = [];
-
-  let vysledky = [];
+let maxCislo = 20;let maxCis = [];
 
   while (vysledky.length < 5) {
     let v = rezim === "plusminus"
@@ -67,26 +54,29 @@ function generuj() {
   balicek.sort(() => Math.random() - 0.5);
 }
 
-function vytvorKartu(text, vysledek) {function vytvorKartu");
+// ✅ karta
+function vytvorKartu(text, vysledek) {
+  let karta = document.createElement("div");
   karta.className = "karta";
   karta.innerText = text;
   karta.dataset.v = vysledek;
   karta.draggable = true;
 
-  // ✅ DRAG pro PC
+  // ✅ PC drag
   karta.addEventListener("dragstart", () => {
     tazenaKarta = karta;
   });
 
-  // ✅ KLIK pro mobil
-  karta.addEventListener("click", () => {
+  // ✅ MOBIL výběr
+  karta.addEventListener("touchend", (e) => {
+    e.preventDefault();
     vybranaKarta = karta;
   });
 
   return karta;
 }
 
-
+// ✅ líznout
 function lizniKartu() {
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
@@ -100,10 +90,12 @@ function lizniKartu() {
   zona.appendChild(vytvorKartu(k.priklad, k.vysledek));
 }
 
+// ✅ sloupce
 document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
+    // ✅ PC drag
     sloupec.addEventListener("dragover", e => e.preventDefault());
 
     sloupec.addEventListener("drop", e => {
@@ -117,24 +109,28 @@ document.addEventListener("DOMContentLoaded", () => {
         nadpis.style.fontWeight = "bold";
         sloupec.appendChild(nadpis);
       }
-// ✅ mobil – klikni karta → klikni sloupec// ✅ mobilListener("click", () => {
-  if (!vybranaKarta) return;
-
-  if (sloupec.children.length === 0) {
-    let nadpis = document.createElement("div");
-    nadpis.innerText = vybranaKarta.dataset.v;
-    nadpis.style.fontWeight = "bold";
-    sloupec.appendChild(nadpis);
-  }
-
-  sloupec.appendChild(vybranaKarta);
-  vybranaKarta = null;
-
-  document.getElementById("aktualni-karta").innerHTML = "";
-});
 
       sloupec.appendChild(tazenaKarta);
       tazenaKarta = null;
+
+      document.getElementById("aktualni-karta").innerHTML = "";
+    });
+
+    // ✅ MOBIL klik → klik
+    sloupec.addEventListener("touchend", (e) => {
+      e.preventDefault();
+
+      if (!vybranaKarta) return;
+
+      if (sloupec.children.length === 0) {
+        let nadpis = document.createElement("div");
+        nadpis.innerText = vybranaKarta.dataset.v;
+        nadpis.style.fontWeight = "bold";
+        sloupec.appendChild(nadpis);
+      }
+
+      sloupec.appendChild(vybranaKarta);
+      vybranaKarta = null;
 
       document.getElementById("aktualni-karta").innerHTML = "";
     });
@@ -144,6 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   generuj();
 });
 
+// ✅ kontrola
 function zkontroluj() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
@@ -191,3 +188,15 @@ function toggleNavod() {
   let n = document.getElementById("navod");
   n.style.display = n.style.display === "none" ? "block" : "none";
 }
+let balicek = [];
+let tazenaKarta = null;
+let vybranaKarta = null;   // ✅ mobil
+let rezim = "plusminus";
+
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generuj() {
+  balicek = [];
+
