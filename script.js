@@ -1,5 +1,6 @@
 let maxCislo = 20;
-let balicek =;let balicek = [];
+let balicek = [];
+let aktualni = null;
 let tazenaKarta = null;
 let rezim = "plusminus";
 
@@ -10,11 +11,19 @@ function rand(min, max) {
 function generuj() {
   balicek = [];
 
+  let pouziteVysledky = new Set();
+
   for (let sl = 0; sl < 5; sl++) {
 
-    let v = (rezim === "plusminus") 
-      ? rand(0, maxCislo) 
-      : rand(1, 10);
+    // ✅ zajistí unikátní výsledky
+    let v;
+    do {
+      v = (rezim === "plusminus")
+        ? rand(0, maxCislo)
+        : rand(1, 10);
+    } while (pouziteVysledky.has(v));
+
+    pouziteVysledky.add(v);
 
     for (let i = 0; i < 4; i++) {
 
@@ -35,19 +44,19 @@ function generuj() {
       } else {
 
         if (Math.random() < 0.5) {
-          // ✅ násobení – VŽDY odpovídá v
+          // ✅ násobení vždy odpovídá v
           let a = rand(1, 10);
 
           if (v % a === 0) {
             let b = v / a;
             priklad = `${a} × ${b}`;
           } else {
-            // fallback (vždy správný)
+            // fallback
             priklad = `1 × ${v}`;
           }
 
         } else {
-          // ✅ dělení – VŽDY odpovídá v
+          // ✅ dělení vždy odpovídá v
           let b = rand(1, 10);
           let a = v * b;
 
@@ -158,11 +167,11 @@ function zkontroluj() {
 
     if (ok && karty.length === 4) {
       sloupec.style.backgroundColor = "#8bc34a";
-    } 
+    }
     else if (ok) {
       sloupec.style.backgroundColor = "#ffd54f";
       vseSpravne = false;
-    } 
+    }
     else {
       sloupec.style.backgroundColor = "#ff9999";
       vseSpravne = false;
@@ -201,7 +210,6 @@ function nastavRezim(r) {
 // návod
 function toggleNavod() {
   let navod = document.getElementById("navod");
-
   navod.style.display = (navod.style.display === "none") ? "block" : "none";
 }
 
