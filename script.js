@@ -1,4 +1,8 @@
-let maxCislo = 20;let maxCisminus";
+let maxCislo = 20;
+let balicek = [];
+let tazenaKarta = null;
+let vybranaKarta = null;
+let rezim = "plusminus";
 
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -70,7 +74,6 @@ function vytvorKartu(text, vysledek) {
     tazenaKarta = karta;
   });
 
-  // ✅ mobil výběr
   karta.addEventListener("click", () => {
     vybranaKarta = karta;
   });
@@ -98,14 +101,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sloupec.addEventListener("drop", e => {
       e.preventDefault();
+
       if (!tazenaKarta) return;
+
       vloz(sloupec, tazenaKarta);
       tazenaKarta = null;
     });
 
-    // ✅ mobil klik
     sloupec.addEventListener("click", () => {
       if (!vybranaKarta) return;
+
       vloz(sloupec, vybranaKarta);
       vybranaKarta = null;
     });
@@ -116,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function vloz(sloupec, karta) {
-
   if (sloupec.querySelectorAll(".karta").length === 0) {
     let nadpis = document.createElement("div");
     nadpis.innerText = karta.dataset.v;
@@ -175,6 +179,3 @@ function toggleNavod() {
   let n = document.getElementById("navod");
   n.style.display = n.style.display === "none" ? "block" : "none";
 }
-let balicek = [];
-let tazenaKarta = null;
-let vybranaKarta = null;
