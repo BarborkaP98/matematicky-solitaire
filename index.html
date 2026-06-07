@@ -12,31 +12,33 @@
 
 <h1>Karetní hra</h1>
 
-<!-- ✅ NÁVOD -->
-<button onclick="toggleNavod()">Návod</button>
+<!-- ✅ návod -->
+<div class="radek">
+  <button onclick="toggleNavod()">Návod</button>
+</div>
 
 <div id="navod" style="display:none;">
   <p>
     Přetahuj karty do sloupců podle výsledku.<br>
-    Každý sloupec musí obsahovat 4 karty se stejným výsledkem.
+    Každý sloupec musí mít 4 stejné výsledky.
   </p>
 </div>
 
-<!-- ✅ OBTÍŽNOST -->
-<div>
+<!-- ✅ obtížnost -->
+<div class="radek">
   <button onclick="nastavObtiznost(20)">Do 20</button>
   <button onclick="nastavObtiznost(100)">Do 100</button>
   <button onclick="nastavObtiznost(1000)">Do 1000</button>
 </div>
 
-<!-- ✅ REŽIM -->
-<div>
+<!-- ✅ režim -->
+<div class="radek">
   <button onclick="nastavRezim('plusminus')">+ −</button>
   <button onclick="nastavRezim('nasobeni')">× ÷</button>
 </div>
 
-<!-- ✅ TLAČÍTKA -->
-<div id="tlacitka">
+<!-- ✅ tlačítka -->
+<div class="radek" id="tlacitka">
   <button onclick="lizniKartu()">Lízni kartu</button>
   <button onclick="zkontroluj()">Zkontroluj</button>
   <button onclick="novaHra()">Nová hra</button>
