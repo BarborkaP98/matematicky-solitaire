@@ -1,11 +1,18 @@
-body {
-  font-family: Arial;
+body {body;
   text-align: center;
-  background:;  background: linear-gradient(#42a5f5, #1e88e5);
-  gap: 10px;
-  margin: 10px;
+  background: linear-gradient(#42a5f5, #1e88e5);
+  color: white;
 }
 
+/* 🔥 sloupce vedle sebe */
+#sloupce {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px;
+}
+
+/* jednotlivý sloupec */
 .sloupec {
   width: 90px;
   min-height: 220px;
@@ -17,10 +24,12 @@ body {
   flex-direction: column;
 }
 
+/* karta */
 .karta {
   background: white;
   color: black;
   width: 100%;
+  box-sizing: border-box;
   text-align: center;
   padding: 6px;
   margin: 4px 0;
@@ -29,11 +38,7 @@ body {
   cursor: grab;
 }
 
+/* tlačítka */
 #tlacitka {
   margin: 10px;
 }
-  color: white;
-}
-
-#sloupce {
-  display: flex;
