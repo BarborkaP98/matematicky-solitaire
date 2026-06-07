@@ -5,25 +5,23 @@ let tazenaKarta = null;
 let rezim = "plusminus";
 
 function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random()*(max-min+1))+min;
 }
 
 function generuj() {
   balicek = [];
 
-  let pouziteVysledky = new Set();
+  let vysledky = [];
 
-  for (let sl = 0; sl < 5; sl++) {
+  while (vysledky.length < 5) {
+    let v = rezim === "plusminus"
+      ? rand(0, maxCislo)
+      : rand(1, 10);
 
-    // ✅ zajistí unikátní výsledky
-    let v;
-    do {
-      v = (rezim === "plusminus")
-        ? rand(0, maxCislo)
-        : rand(1, 10);
-    } while (pouziteVysledky.has(v));
+    if (!vysledky.includes(v)) vysledky.push(v);
+  }
 
-    pouziteVysledky.add(v);
+  vysledky.forEach(v => {
 
     for (let i = 0; i < 4; i++) {
 
@@ -44,22 +42,12 @@ function generuj() {
       } else {
 
         if (Math.random() < 0.5) {
-          // ✅ násobení vždy odpovídá v
-          let a = rand(1, 10);
-
-          if (v % a === 0) {
-            let b = v / a;
-            priklad = `${a} × ${b}`;
-          } else {
-            // fallback
-            priklad = `1 × ${v}`;
-          }
-
+          let a = 1;
+          let b = v;
+          priklad = `${a} × ${b}`;
         } else {
-          // ✅ dělení vždy odpovídá v
           let b = rand(1, 10);
           let a = v * b;
-
           priklad = `${a} ÷ ${b}`;
         }
 
@@ -70,7 +58,7 @@ function generuj() {
         vysledek: v
       });
     }
-  }
+  });
 
   balicek.sort(() => Math.random() - 0.5);
 }
@@ -80,23 +68,17 @@ function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
   karta.innerText = text;
-
   karta.dataset.v = vysledek;
   karta.draggable = true;
 
   karta.addEventListener("dragstart", (e) => {
     tazenaKarta = karta;
-
-    e.dataTransfer.setData("text/plain", JSON.stringify({
-      priklad: karta.innerText,
-      vysledek: karta.dataset.v
-    }));
   });
 
   return karta;
 }
 
-// líznutí
+// líznout
 function lizniKartu() {
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
@@ -108,97 +90,63 @@ function lizniKartu() {
   let zona = document.getElementById("aktualni-karta");
   zona.innerHTML = "";
 
-  let karta = vytvorKartu(aktualni.priklad, aktualni.vysledek);
-  zona.appendChild(karta);
+  zona.appendChild(vytvorKartu(aktualni.priklad, aktualni.vysledek));
 }
 
 // drop
 document.querySelectorAll(".sloupec").forEach(sloupec => {
 
-  sloupec.addEventListener("dragover", (e) => {
-    e.preventDefault();
-  });
+  sloupec.addEventListener("dragover", e => e.preventDefault());
 
-  sloupec.addEventListener("drop", (e) => {
+  sloupec.addEventListener("drop", e => {
     e.preventDefault();
 
-    let dataText = e.dataTransfer.getData("text/plain");
-    if (!dataText) return;
+    if (!tazenaKarta) return;
 
-    let data = JSON.parse(dataText);
-
-    let novaKarta = vytvorKartu(data.priklad, data.vysledek);
-    sloupec.appendChild(novaKarta);
-
-    if (tazenaKarta) {
-      tazenaKarta.remove();
-      tazenaKarta = null;
-    }
+    sloupec.appendChild(tazenaKarta);
+    tazenaKarta = null;
 
     aktualni = null;
     document.getElementById("aktualni-karta").innerHTML = "";
   });
-
 });
 
 // kontrola
 function zkontroluj() {
   let sloupce = document.querySelectorAll(".sloupec");
 
-  let vseSpravne = true;
+  sloupce.forEach(s => {
+    let k = s.children;
 
-  sloupce.forEach(sloupec => {
-    let karty = sloupec.children;
-
-    sloupec.style.backgroundColor = "#c8e6c9";
-
-    if (karty.length === 0) {
-      sloupec.style.backgroundColor = "#ff9999";
-      vseSpravne = false;
+    if (k.length === 0) {
+      s.style.backgroundColor = "#ff9999";
       return;
     }
 
-    let prvni = karty[0].dataset.v;
-    let ok = true;
+    let v = k[0].dataset.v;
+    let ok = [...k].every(x => x.dataset.v === v);
 
-    for (let i = 1; i < karty.length; i++) {
-      if (karty[i].dataset.v != prvni) ok = false;
-    }
-
-    if (ok && karty.length === 4) {
-      sloupec.style.backgroundColor = "#8bc34a";
-    }
-    else if (ok) {
-      sloupec.style.backgroundColor = "#ffd54f";
-      vseSpravne = false;
-    }
-    else {
-      sloupec.style.backgroundColor = "#ff9999";
-      vseSpravne = false;
-    }
+    if (ok && k.length === 4) s.style.backgroundColor = "#8bc34a";
+    else if (ok) s.style.backgroundColor = "#ffd54f";
+    else s.style.backgroundColor = "#ff9999";
   });
-
-  if (vseSpravne) {
-    setTimeout(() => alert("🎉 Skvělá práce!"), 200);
-  }
 }
 
 // nová hra
 function novaHra() {
-  document.querySelectorAll(".sloupec").forEach(sloupec => {
-    sloupec.innerHTML = "";
-    sloupec.style.backgroundColor = "#c8e6c9";
+  document.querySelectorAll(".sloupec").forEach(s => {
+    s.innerHTML = "";
+    s.style.backgroundColor = "#c8e6c9";
   });
 
   document.getElementById("aktualni-karta").innerHTML = "";
 
-  aktualni = null;
   generuj();
 }
 
 // režimy
-function nastavObtiznost(hodnota) {
-  maxCislo = hodnota;
+function nastavObtiznost(h) {
+  maxCislo = h;
   novaHra();
 }
 
@@ -209,8 +157,8 @@ function nastavRezim(r) {
 
 // návod
 function toggleNavod() {
-  let navod = document.getElementById("navod");
-  navod.style.display = (navod.style.display === "none") ? "block" : "none";
+  let n = document.getElementById("navod");
+  n.style.display = n.style.display === "none" ? "block" : "none";
 }
 
 // start
