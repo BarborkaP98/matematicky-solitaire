@@ -93,3 +93,14 @@ button {
 #aktualni-karta .karta {
   margin: 0 auto;
 }
+.sloupec div:first-child {.sloupec div:first-child  background: #d4af37;   /* 🟡 zlatá */
+  border-radius: 5px;
+
+  font-weight: bold;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+  color: black;
+
+
+
