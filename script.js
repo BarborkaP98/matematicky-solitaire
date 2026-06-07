@@ -58,10 +58,7 @@ function generuj() {
       if (!pouzite.includes(priklad)) {
         pouzite.push(priklad);
 
-        balicek.push({
-          priklad,
-          vysledek: v
-        });
+        balicek.push({ priklad, vysledek: v });
       }
     }
   });
