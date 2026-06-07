@@ -21,10 +21,8 @@ function generuj() {
     if (rezim === "plusminus") {
       v = rand(0, maxCislo);
     } else {
-      // malá násobilka → výsledky do 100
-      v = rand(1, 10) * rand(1, 10);
-    }
-
+  v = rand(1, 10);  // ✅ jen malé výsledky (1–10)
+}
     if (!vysledky.includes(v)) vysledky.push(v);
   }
 
@@ -49,37 +47,28 @@ function generuj() {
           let b = a - v;
           priklad = `${a} - ${b}`;
         }
+} else {
 
-      } else {
+  if (Math.random() < 0.5) {
+    // ✅ násobení (malá násobilka)
+    let a = rand(1, 10);
+    let b = rand(1, 10);
 
-        if (Math.random() < 0.5) {
-          // ✅ násobení
-          let delitele = [];
+    v = a * b;  // ✅ výsledek určíme až tady
+    priklad = `${a} × ${b}`;
 
-          for (let i = 1; i <= 10; i++) {
-            if (v % i === 0) {
-              delitele.push(i);
-            }
-          }
+  } else {
+    // ✅ dělení (malé)
+    let b = rand(1, 10);
+    let vysledek = rand(1, 10);
 
-          if (delitele.length === 0) continue;
+    let a = b * vysledek;
 
-          let a = delitele[Math.floor(Math.random() * delitele.length)];
-          let b = v / a;
+    v = vysledek;  // ✅ výsledek taky určíme tady
+    priklad = `${a} ÷ ${b}`;
+  }
 
-          if (b > 10) continue;
-
-          priklad = `${a} × ${b}`;
-
-        } else {
-          // ✅ dělení
-          let b = rand(1, 10);
-          let a = v * b;
-
-          priklad = `${a} ÷ ${b}`;
-        }
-
-      }
+}
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
