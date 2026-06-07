@@ -211,9 +211,16 @@ function zkontroluj() {
 function novaHra() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
     sloupec.innerHTML = "";
+
+    // ✅ reset barvy
+    sloupec.style.backgroundColor = "#c8e6c9";
   });
 
   document.getElementById("aktualni-karta").innerHTML = "";
+
+  aktualni = null;
+  generuj();
+}
 
   aktualni = null;
   generuj();
