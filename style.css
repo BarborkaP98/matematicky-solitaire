@@ -6,28 +6,36 @@ body {
   color: white;
 }
 
-/* ✅ všechny horní bloky */
-body > div {
-  margin: 10px;
-}
-
-/* ✅ tlačítkové skupiny (obtížnost + režim) */
-body > div:not(#sloupce):not(#aktualni-karta) {
+/* ✅ řádky tlačítek */
+.radek {
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin: 10px;
   flex-wrap: wrap;
 }
 
-/* sloupce vedle sebe */
+/* ✅ návod */
+#navod {
+  max-width: 400px;
+  margin: 10px auto;
+  background: rgba(255,255,255,0.2);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* ✅ sloupce */
 #sloupce {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin: 20px;
+
+  position: relative;
+  z-index: 1;
 }
 
-/* sloupec */
+/* ✅ samotný sloupec */
 .sloupec {
   width: 100px;
   min-height: 200px;
@@ -37,7 +45,7 @@ body > div:not(#sloupce):not(#aktualni-karta) {
   padding: 5px;
 }
 
-/* karta */
+/* ✅ karta */
 .karta {
   background: white;
   color: black;
@@ -46,11 +54,11 @@ body > div:not(#sloupce):not(#aktualni-karta) {
   border-radius: 8px;
 }
 
-/* tlačítka */
-#tlacitka {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+/* ✅ tlačítka nahoře MUSÍ být nahoře */
+.radek,
+#navod {
+  position: relative;
+  z-index: 2;
 }
 
 button {
@@ -60,17 +68,8 @@ button {
   cursor: pointer;
 }
 
-/* karta nahoře */
+/* ✅ karta nahoře */
 #aktualni-karta {
   margin: 10px;
   min-height: 50px;
-}
-
-/* návod */
-#navod {
-  max-width: 400px;
-  margin: 10px auto;
-  background: rgba(255,255,255,0.2);
-  padding: 10px;
-  border-radius: 8px;
 }
