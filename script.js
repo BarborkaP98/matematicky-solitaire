@@ -1,7 +1,4 @@
-let vybranaKarta = null;
-let maxCislo = 20;let maxCislo =k = [];
-let tazenaKarta = null;
-let rezim = "plusminus";
+let maxCislo = 20;let maxCisminus";
 
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -71,12 +68,12 @@ function vytvorKartu(text, vysledek) {
 
   karta.addEventListener("dragstart", () => {
     tazenaKarta = karta;
-
   });
-// ✅ mobil – vybere kartu// ✅ mobil –arta.addEventListener("click", () => {
-  vybranaKarta = karta;
-});
 
+  // ✅ mobil výběr
+  karta.addEventListener("click", () => {
+    vybranaKarta = karta;
+  });
 
   return karta;
 }
@@ -101,41 +98,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sloupec.addEventListener("drop", e => {
       e.preventDefault();
-
       if (!tazenaKarta) return;
-
-      if (sloupec.children.length === 0) {
-        let nadpis = document.createElement("div");
-        nadpis.innerText = tazenaKarta.dataset.v;
-        nadpis.style.fontWeight = "bold";
-        sloupec.appendChild(nadpis);
-      }
-
-      sloupec.appendChild(tazenaKarta);
+      vloz(sloupec, tazenaKarta);
       tazenaKarta = null;
-
-      document.getElementById("aktualni-karta").innerHTML = "";
     });
-   // ✅ mobil – klikni karta → klikni sloupec
-sloupec.addEventListener("click", () => {
-  if (!vybranaKarta) return;
 
-  if (sloupec.querySelectorAll(".karta").length === 0) {
-    let nadpis = document.createElement("div");
-    nadpis.innerText = vybranaKarta.dataset.v;
-    nadpis.style.fontWeight = "bold";
-    sloupec.appendChild(nadpis);
-  }
+    // ✅ mobil klik
+    sloupec.addEventListener("click", () => {
+      if (!vybranaKarta) return;
+      vloz(sloupec, vybranaKarta);
+      vybranaKarta = null;
+    });
 
-  sloupec.appendChild(vybranaKarta);
-  vybranaKarta = null;
-
-  document.getElementById("aktualni-karta").innerHTML = "";
-}); 
   });
 
   generuj();
 });
+
+function vloz(sloupec, karta) {
+
+  if (sloupec.querySelectorAll(".karta").length === 0) {
+    let nadpis = document.createElement("div");
+    nadpis.innerText = karta.dataset.v;
+    nadpis.style.fontWeight = "bold";
+    sloupec.appendChild(nadpis);
+  }
+
+  sloupec.appendChild(karta);
+  document.getElementById("aktualni-karta").innerHTML = "";
+}
 
 function zkontroluj() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
@@ -184,3 +175,7 @@ function toggleNavod() {
   let n = document.getElementById("navod");
   n.style.display = n.style.display === "none" ? "block" : "none";
 }
+``
+let balicek = [];
+let tazenaKarta = null;
+let vybranaKarta = null;
