@@ -27,16 +27,19 @@ div {
 }
 
 /* Jednotlivý sloupec */
-.sloupec {.slou100px;
+.sloupec {
   width: 90px;
-  min-height:220px;
+  min-height: 220px;
+
   background: #c8e6c9;
   border: 2px dashed #1b5e20;
   border-radius: 10px;
-  padding: 5px;
-  transition: 0.3s;
-}
 
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+}
 /* Efekt při hover (bonus – hezké 🙂) */
 .sloupec:hover {
   background: #a5d6a7;
@@ -46,18 +49,24 @@ div {
 .karta {
   background: white;
   color: black;
-  
-  width: 70px;              /* ✅ pevná šířka */
+
+  width: 100%;         /* ✅ místo pevné šířky */
+  box-sizing: border-box;
+
   text-align: center;
 
   padding: 6px;
   margin: 4px 0;
+
   border-radius: 6px;
   font-size: 14px;
+
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  cursor: grab;            /* 👍 vizuální hint */
-   user-select: none;   /* nebudeš označovat text při tahání */
+
+  cursor: grab;
+  user-select: none;
 }
+
 .karta:active {
   cursor: grabbing;
 }
@@ -100,4 +109,3 @@ button:hover {
   border-radius: 10px;
   font-size: 14px;
 }
-``
