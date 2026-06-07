@@ -1,6 +1,6 @@
-let maxCislo = 20;let maxCislo =  = [];
+let maxCislo = 20;
+let balicek = [];
 let tazenaKarta = null;
-let vybranaKarta = null;
 let rezim = "plusminus";
 
 function rand(min, max) {
@@ -21,6 +21,7 @@ function generuj() {
   }
 
   vysledky.forEach(v => {
+
     let pouzite = [];
 
     while (pouzite.length < 4) {
@@ -56,6 +57,7 @@ function generuj() {
 
       if (!pouzite.includes(priklad)) {
         pouzite.push(priklad);
+
         balicek.push({ priklad, vysledek: v });
       }
     }
@@ -64,7 +66,6 @@ function generuj() {
   balicek.sort(() => Math.random() - 0.5);
 }
 
-// karta
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
@@ -72,20 +73,13 @@ function vytvorKartu(text, vysledek) {
   karta.dataset.v = vysledek;
   karta.draggable = true;
 
-  // PC drag
   karta.addEventListener("dragstart", () => {
     tazenaKarta = karta;
-  });
-
-  // mobil + klik fallback
-  karta.addEventListener("click", () => {
-    vybranaKarta = karta;
   });
 
   return karta;
 }
 
-// lízni
 function lizniKartu() {
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
@@ -103,21 +97,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
-    // PC drag
     sloupec.addEventListener("dragover", e => e.preventDefault());
 
     sloupec.addEventListener("drop", e => {
       e.preventDefault();
-      if (!tazenaKarta) return;
-      vloz(sloupec, tazenaKarta);
-      tazenaKarta = null;
-    });
 
-    // klik (funguje i na mobilu!)
-    sloupec.addEventListener("click", () => {
-      if (!vybranaKarta) return;
-      vloz(sloupec, vybranaKarta);
-      vybranaKarta = null;
+      if (!tazenaKarta) return;
+
+      if (sloupec.children.length === 0) {
+        let nadpis = document.createElement("div");
+        nadpis.innerText = tazenaKarta.dataset.v;
+        nadpis.style.fontWeight = "bold";
+        sloupec.appendChild(nadpis);
+      }
+
+      sloupec.appendChild(tazenaKarta);
+      tazenaKarta = null;
+
+      document.getElementById("aktualni-karta").innerHTML = "";
     });
 
   });
@@ -125,21 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
   generuj();
 });
 
-// společná funkce
-function vloz(sloupec, karta) {
-
-  if (sloupec.querySelectorAll(".karta").length === 0) {
-    let nadpis = document.createElement("div");
-    nadpis.innerText = karta.dataset.v;
-    nadpis.style.fontWeight = "bold";
-    sloupec.appendChild(nadpis);
-  }
-
-  sloupec.appendChild(karta);
-  document.getElementById("aktualni-karta").innerHTML = "";
-}
-
-// kontrola
 function zkontroluj() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
