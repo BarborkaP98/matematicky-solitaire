@@ -12,31 +12,40 @@
 
 <h1>Karetní hra</h1>
 
-<!-- obtížnost -->
-<div>
-  Do 10:
-  <button onclick="nastavObtiznost(10)">10</button>
-  <button onclick="nastavObtiznost(20)">20</button>
-  <button onclick="nastavObtiznost(100)">100</button>
+<!-- ✅ NÁVOD -->
+<button onclick="toggleNavod()">Návod</button>
+
+<div id="navod" style="display:none;">
+  <p>
+    Přetahuj karty do sloupců podle výsledku.<br>
+    Každý sloupec musí obsahovat 4 karty se stejným výsledkem.
+  </p>
 </div>
 
-<!-- režim -->
+<!-- ✅ OBTÍŽNOST -->
+<div>
+  <button onclick="nastavObtiznost(20)">Do 20</button>
+  <button onclick="nastavObtiznost(100)">Do 100</button>
+  <button onclick="nastavObtiznost(1000)">Do 1000</button>
+</div>
+
+<!-- ✅ REŽIM -->
 <div>
   <button onclick="nastavRezim('plusminus')">+ −</button>
   <button onclick="nastavRezim('nasobeni')">× ÷</button>
 </div>
 
-<!-- tlačítka -->
+<!-- ✅ TLAČÍTKA -->
 <div id="tlacitka">
   <button onclick="lizniKartu()">Lízni kartu</button>
   <button onclick="zkontroluj()">Zkontroluj</button>
   <button onclick="novaHra()">Nová hra</button>
 </div>
 
-<!-- karta -->
+<!-- ✅ KARTA -->
 <div id="aktualni-karta"></div>
 
-<!-- ✅ SLoupce -->
+<!-- ✅ SLOUPCE -->
 <div id="sloupce">
   <div class="sloupec"></div>
   <div class="sloupec"></div>
