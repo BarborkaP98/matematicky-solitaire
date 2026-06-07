@@ -141,24 +141,49 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
 });
 
 // kontrola
-function zkontroluj() {
-  let sloupce = document.querySelectorAll(".sloupec");
+function zkontroluj() {function zkontrol sloupce = document.querySelectorAll(".sloupec");
 
-  sloupce.forEach(s => {
-    let k = s.children;
+  let vseSpravne = true;
 
-    if (k.length === 0) {
-      s.style.backgroundColor = "#ff9999";
+  sloupce.forEach(sloupec => {
+
+    // ✅ vezmeme jen karty (ignorujeme nadpis)
+    let karty = Array.from(sloupec.children).filter(el => el.classList.contains("karta"));
+
+    // reset barvy
+    sloupec.style.backgroundColor = "#c8e6c9";
+
+    if (karty.length === 0) {
+      sloupec.style.backgroundColor = "#ff9999";
+      vseSpravne = false;
       return;
     }
 
-    let v = k[0].dataset.v;
-    let ok = [...k].every(x => x.dataset.v === v);
+    let prvni = karty[0].dataset.v;
+    let ok = true;
 
-    if (ok && k.length === 4) s.style.backgroundColor = "#8bc34a";
-    else if (ok) s.style.backgroundColor = "#ffd54f";
-    else s.style.backgroundColor = "#ff9999";
+    for (let i = 1; i < karty.length; i++) {
+      if (karty[i].dataset.v !== prvni) {
+        ok = false;
+      }
+    }
+
+    if (ok && karty.length === 4) {
+      sloupec.style.backgroundColor = "#8bc34a";
+    } 
+    else if (ok) {
+      sloupec.style.backgroundColor = "#ffd54f";
+      vseSpravne = false;
+    } 
+    else {
+      sloupec.style.backgroundColor = "#ff9999";
+      vseSpravne = false;
+    }
   });
+
+  if (vseSpravne) {
+    setTimeout(() => alert("🎉 Skvělá práce!"), 200);
+  }
 }
 
 // nová hra
