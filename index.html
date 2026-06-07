@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="cs">
-<head>
+<html><html lang="cs">
   <meta charset="UTF-8">
   <title>Karetní hra</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- JS (důležité: defer!) -->
   <script src="script.js" defer></script>
 </head>
 
@@ -11,30 +14,31 @@
 
 <h1>Karetní hra</h1>
 
-<!-- obtížnost -->
+<!-- ✅ obtížnost -->
 <div>
-  Do 10 <button onclick="nastavObtiznost(10)">Do 10</button>
-  <button onclick="nastavObtiznost(20)">Do 20</button>
-  <button onclick="nastavObtiznost(100)">Do 100</button>
+  Do 10:
+  <button onclick="nastavObtiznost(10)">10</button>
+  <button onclick="nastavObtiznost(20)">20</button>
+  <button onclick="nastavObtiznost(100)">100</button>
 </div>
 
-<!-- režim -->
+<!-- ✅ režim -->
 <div>
   <button onclick="nastavRezim('plusminus')">+ −</button>
   <button onclick="nastavRezim('nasobeni')">× ÷</button>
 </div>
 
-<!-- tlačítka -->
+<!-- ✅ ovládání -->
 <div id="tlacitka">
   <button onclick="lizniKartu()">Lízni kartu</button>
   <button onclick="zkontroluj()">Zkontroluj</button>
   <button onclick="novaHra()">Nová hra</button>
 </div>
 
-<!-- karta -->
+<!-- ✅ líznutá karta -->
 <div id="aktualni-karta"></div>
 
-<!-- ✅ důležité -->
+<!-- ✅ TOHLE JSOU TY SLoupce !! -->
 <div id="sloupce">
   <div class="sloupec"></div>
   <div class="sloupec"></div>
