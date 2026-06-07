@@ -141,14 +141,23 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
 });
 
 // kontrola
-function zkontroluj() {function zkontrol sloupce = document.querySelectorAll(".sloupec");
+function zkontroluj() {
+  let sloupce = document.querySelectorAll(".sloupec");
 
   let vseSpravne = true;
 
   sloupce.forEach(sloupec => {
 
-    // ✅ vezmeme jen karty (ignorujeme nadpis)
-    let karty = Array.from(sloupec.children).filter(el => el.classList.contains("karta"));
+    let vsechny = sloupec.children;
+
+    // ✅ vezmeme jen karty (ty mají class "karta")
+    let karty = [];
+
+    for (let i = 0; i < vsechny.length; i++) {
+      if (vsechny[i].classList.contains("karta")) {
+        karty.push(vsechny[i]);
+      }
+    }
 
     // reset barvy
     sloupec.style.backgroundColor = "#c8e6c9";
@@ -182,7 +191,9 @@ function zkontroluj() {function zkontrol sloupce = document.querySelectorAll(".s
   });
 
   if (vseSpravne) {
-    setTimeout(() => alert("🎉 Skvělá práce!"), 200);
+    setTimeout(() => {
+      alert("🎉 Skvělá práce!");
+    }, 200);
   }
 }
 
