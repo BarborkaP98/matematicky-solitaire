@@ -1,27 +1,30 @@
-let maxCislo = 20;
 let balicek = [];
-let aktualni = null;
-let tazenaK          priklad = `${a} - ${b}`;let tazenaKarta = null;
+let tazenaKarta = null;
+
+function rand(min, max) {
+  return {  return Math.floor(Math.random() * (max - min + 1)) + min;
+    let pouzite = [];
+
+    while (pouzite.length < 4) {
+
+      let typ = Math.random();
+      let priklad;
+
+      if (typ < 0.5) {
+
+        let a = rand(1, 10);
+
+        if (v % a === 0) {
+          let b = v / a;
+          priklad = `${a} × ${b}`;
+        } else {
+          priklad = `1 × ${v}`;
         }
 
       } else {
-
-        if (Math.random() < 0.5) {
-          let a = rand(1, 10);
-
-          if (v % a === 0) {
-            let b = v / a;
-            priklad = `${a} × ${b}`;
-          } else {
-            priklad = `1 × ${v}`;
-          }
-
-        } else {
-          let b = rand(1, 10);
-          let a = v * b;
-          priklad = `${a} ÷ ${b}`;
-        }
-
+        let b = rand(1, 10);
+        let a = v * b;
+        priklad = `${a} ÷ ${b}`;
       }
 
       if (!pouzite.includes(priklad)) {
@@ -38,12 +41,10 @@ let tazenaK          priklad = `${a} - ${b}`;let tazenaKarta = null;
   balicek.sort(() => Math.random() - 0.5);
 }
 
-// ✅ karta
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
   karta.innerText = text;
-
   karta.dataset.v = vysledek;
   karta.draggable = true;
 
@@ -54,22 +55,19 @@ function vytvorKartu(text, vysledek) {
   return karta;
 }
 
-// ✅ líznutí
 function lizniKartu() {
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
     return;
   }
 
-  aktualni = balicek.pop();
+  let karta = balicek.pop();
 
   let zona = document.getElementById("aktualni-karta");
   zona.innerHTML = "";
-
-  zona.appendChild(vytvorKartu(aktualni.priklad, aktualni.vysledek));
+  zona.appendChild(vytvorKartu(karta.priklad, karta.vysledek));
 }
 
-// ✅ spuštění až po načtení stránky
 document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".sloupec").forEach(sloupec => {
@@ -81,43 +79,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!tazenaKarta) return;
 
-      // ✅ přidá nadpis jen jednou
       if (sloupec.querySelectorAll(".karta").length === 0) {
         let nadpis = document.createElement("div");
         nadpis.innerText = tazenaKarta.dataset.v;
         nadpis.style.fontWeight = "bold";
         nadpis.style.marginBottom = "5px";
-
         sloupec.appendChild(nadpis);
       }
 
       sloupec.appendChild(tazenaKarta);
       tazenaKarta = null;
 
-      aktualni = null;
       document.getElementById("aktualni-karta").innerHTML = "";
     });
 
   });
 
-  generuj(); // ✅ důležité až tady
+  generuj();
 });
 
-// ✅ kontrola
 function zkontroluj() {
-  let sloupce = document.querySelectorAll(".sloupec");
-
-  let vseSpravne = true;
-
-  sloupce.forEach(sloupec => {
+  document.querySelectorAll(".sloupec").forEach(sloupec => {
 
     let karty = sloupec.querySelectorAll(".karta");
 
-    sloupec.style.backgroundColor = "#c8e6c9";
-
     if (karty.length === 0) {
-      sloupec.style.backgroundColor = "#ff9999";
-      vseSpravne = false;
+      sloupec.style.background = "red";
       return;
     }
 
@@ -128,56 +115,21 @@ function zkontroluj() {
       if (k.dataset.v !== v) ok = false;
     });
 
-    if (ok && karty.length === 4) {
-      sloupec.style.backgroundColor = "#8bc34a";
-    } else if (ok) {
-      sloupec.style.backgroundColor = "#ffd54f";
-      vseSpravne = false;
-    } else {
-      sloupec.style.backgroundColor = "#ff9999";
-      vseSpravne = false;
-    }
+    sloupec.style.background =
+      ok && karty.length === 4 ? "green" :
+      ok ? "orange" : "red";
   });
-
-  if (vseSpravne) {
-    setTimeout(() => alert("🎉 Skvělá práce!"), 200);
-  }
 }
 
-// ✅ nová hra
 function novaHra() {
   document.querySelectorAll(".sloupec").forEach(s => {
     s.innerHTML = "";
-    s.style.backgroundColor = "#c8e6c9";
+    s.style.background = "#c8e6c9";
   });
 
   document.getElementById("aktualni-karta").innerHTML = "";
-  tazenaKarta = null;
-  aktualni = null;
-
   generuj();
 }
-
-// ✅ nastavení
-function nastavObtiznost(h) {
-  maxCislo = h;
-  novaHra();
-}
-
-function nastavRezim(r) {
-  rezim = r;
-  novaHra();
-}
-
-// ✅ návod
-function toggleNavod() {
-  let n = document.getElementById("navod");
-  n.style.display = n.style.display === "none" ? "block" : "none";
-}
-let rezim = "plusminus";
-
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function generuj() {
@@ -186,28 +138,7 @@ function generuj() {
   let vysledky = [];
 
   while (vysledky.length < 5) {
-    let v = rezim === "plusminus"
-      ? rand(0, maxCislo)
-      : rand(1, 10);
-
-    if (!vysledky.includes(v)) {
-      vysledky.push(v);
-    }
+    let v = rand(1, 10);
+    if (!vysledky.includes(v)) vysledky.push(v);
   }
 
-  vysledky.forEach(v => {
-    let pouzite = [];
-
-    while (pouzite.length < 4) {
-
-      let priklad;
-
-      if (rezim === "plusminus") {
-
-        if (Math.random() < 0.5) {
-          let a = rand(0, v);
-          let b = v - a;
-          priklad = `${a} + ${b}`;
-        } else {
-          let a = rand(v, maxCislo);
-          let b = a - v;
