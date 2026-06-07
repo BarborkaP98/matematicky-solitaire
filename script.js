@@ -7,23 +7,24 @@ let rezim = "plusminus";
 function rand(min, max) {
   return Math.floor(Math.random()*(max-min+1))+min;
 }
-
 function generuj() {
-  balicek = [];
+  let pouziteVysledky = new Set();  balicek = [];
 
-  let vysledky = [];
+  for (let sl = 0; sl < 5; sl++) {
 
-  while (vysledky.length < 5) {
-    let v = rezim === "plusminus"
-      ? rand(0, maxCislo)
-      : rand(1, 10);
+    let v;
+    do {
+      v = (rezim === "plusminus")
+        ? rand(0, maxCislo)
+        : rand(1, 10);
+    } while (pouziteVysledky.has(v));
 
-    if (!vysledky.includes(v)) vysledky.push(v);
-  }
+    pouziteVysledky.add(v);
 
-  vysledky.forEach(v => {
+    let pouzitePriklady = new Set();
+    let pocet = 0;
 
-    for (let i = 0; i < 4; i++) {
+    while (pocet < 4) {
 
       let priklad;
 
@@ -42,26 +43,42 @@ function generuj() {
       } else {
 
         if (Math.random() < 0.5) {
-          let a = 1;
-          let b = v;
-          priklad = `${a} × ${b}`;
+          let a = rand(1, 10);
+
+          if (v % a === 0) {
+            let b = v / a;
+            priklad = `${a} × ${b}`;
+          } else {
+            priklad = `1 × ${v}`;
+          }
+
         } else {
           let b = rand(1, 10);
           let a = v * b;
+
           priklad = `${a} ÷ ${b}`;
         }
 
       }
 
-      balicek.push({
-        priklad: priklad,
-        vysledek: v
-      });
+      // ✅ HLÍDÁNÍ DUPLIKÁTŮ
+      if (!pouzitePriklady.has(priklad)) {
+        pouzitePriklady.add(priklad);
+
+        balicek.push({
+          priklad: priklad,
+          vysledek: v
+        });
+
+        pocet++;
+      }
     }
-  });
+  }
 
   balicek.sort(() => Math.random() - 0.5);
 }
+
+
 
 // karta
 function vytvorKartu(text, vysledek) {
