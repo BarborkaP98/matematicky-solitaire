@@ -1,3 +1,4 @@
+alert("JS běží");
 let maxCislo = 20;
 let balicek = [];
 let tazenaKarta = null;
