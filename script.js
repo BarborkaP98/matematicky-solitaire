@@ -120,6 +120,18 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
 
     if (!tazenaKarta) return;
 
+  // ✅ pokud je sloupec prázdný → zobraz výsledek
+  if (sloupec.children.length === 0) {
+    let vysledek = tazenaKarta.dataset.v;
+
+    let nadpis = document.createElement("div");
+    nadpis.innerText = vysledek;
+    nadpis.style.fontWeight = "bold";
+    nadpis.style.marginBottom = "5px";
+
+    sloupec.appendChild(nadpis);
+  }
+
     sloupec.appendChild(tazenaKarta);
     tazenaKarta = null;
 
