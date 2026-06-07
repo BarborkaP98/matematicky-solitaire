@@ -13,23 +13,11 @@ function rand(min, max) {
 function generuj() {
   balicek = [];
 
-  let vysledky = [];
-
-  while (vysledky.length < 5) {
-    let v;
-
-    if (rezim === "plusminus") {
-      v = rand(0, maxCislo);
-    } else {
-  v = rand(1, 10);  // ✅ jen malé výsledky (1–10)
-}
-    if (!vysledky.includes(v)) vysledky.push(v);
-  }
-
   let pouzite = new Set();
 
-  vysledky.forEach(v => {
+  for (let sl = 0; sl < 5; sl++) {
 
+    let v;
     let pocet = 0;
 
     while (pocet < 4) {
@@ -37,6 +25,9 @@ function generuj() {
       let priklad;
 
       if (rezim === "plusminus") {
+
+        // ✅ normální režim
+        v = rand(0, maxCislo);
 
         if (Math.random() < 0.5) {
           let a = rand(0, v);
@@ -47,28 +38,28 @@ function generuj() {
           let b = a - v;
           priklad = `${a} - ${b}`;
         }
-} else {
 
-  if (Math.random() < 0.5) {
-    // ✅ násobení (malá násobilka)
-    let a = rand(1, 10);
-    let b = rand(1, 10);
+      } else {
 
-    v = a * b;  // ✅ výsledek určíme až tady
-    priklad = `${a} × ${b}`;
+        // ✅ násobilkový režim BEZ while problémů
 
-  } else {
-    // ✅ dělení (malé)
-    let b = rand(1, 10);
-    let vysledek = rand(1, 10);
+        if (Math.random() < 0.5) {
+          let a = rand(1, 10);
+          let b = rand(1, 10);
 
-    let a = b * vysledek;
+          v = a * b;
+          priklad = `${a} × ${b}`;
 
-    v = vysledek;  // ✅ výsledek taky určíme tady
-    priklad = `${a} ÷ ${b}`;
-  }
+        } else {
+          let b = rand(1, 10);
+          let vysledek = rand(1, 10);
 
-}
+          let a = b * vysledek;
+
+          v = vysledek;
+          priklad = `${a} ÷ ${b}`;
+        }
+      }
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
@@ -81,7 +72,7 @@ function generuj() {
         pocet++;
       }
     }
-  });
+  }
 
   balicek.sort(() => Math.random() - 0.5);
 }
