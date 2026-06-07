@@ -4,36 +4,32 @@ let aktualni = null;
 let tazenaKarta = null;
 let rezim = "plusminus";
 
-// náhodné číslo
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// ✅ generování balíčku (FINÁLNÍ VERZE)
 function generuj() {
   balicek = [];
 
   let pouzite = new Set();
 
-for (let sl = 0; sl < 5; sl++) {
+  for (let sl = 0; sl < 5; sl++) {
 
-  let v;
+    let v;
 
-  if (rezim === "plusminus") {
+    if (rezim === "plusminus") {
       v = rand(0, maxCislo);
-  } else {
-    v = rand(1, 10);  // ✅ jen malé výsledky!!
-  }
+    } else {
+      v = rand(1, 10); // ✅ malé výsledky pro násobilku
+    }
 
-  let pocet = 0;
+    let pocet = 0;
 
-  while (pocet < 4) {
+    while (pocet < 4) {
 
       let priklad;
 
       if (rezim === "plusminus") {
-
-        // ✅ normální režim
 
         if (Math.random() < 0.5) {
           let a = rand(0, v);
@@ -47,28 +43,37 @@ for (let sl = 0; sl < 5; sl++) {
 
       } else {
 
-        // ✅ násobilkový režim BEZ while problémů
+        if (Math.random() < 0.5) {
+          // ✅ násobení odpovídající v
+          let delitele = [];
 
-if (Math.random() < 0.5) {
-  // ✅ násobení odpovídající v  for (let i = 1; i <= 10; i++) {  // ✅ násobení odpovídající v
-    if (v % i === 0) {
-      delitele.push(i);
-    }
-  }
+          for (let i = 1; i <= 10; i++) {
+            if (v % i === 0) {
+              delitele.push(i);
+            }
+          }
 
-  if (delitele.length === 0) continue;
+          let a;
 
-  let a = delitele[Math.floor(Math.random() * delitele.length)];
-  let b = v / a;
+          if (delitele.length === 0) {
+            a = 1;
+          } else {
+            a = delitele[Math.floor(Math.random() * delitele.length)];
+          }
 
-  if (b > 10) continue;
+          let b = v / a;
 
-  priklad = `${a} × ${b}`;
-}
-``
-  let delitele = [];
+          priklad = `${a} × ${b}`;
 
+        } else {
+          // ✅ dělení
+          let b = rand(1, 10);
+          let a = v * b;
 
+          priklad = `${a} ÷ ${b}`;
+        }
+
+      }
 
       if (!pouzite.has(priklad)) {
         pouzite.add(priklad);
@@ -86,7 +91,7 @@ if (Math.random() < 0.5) {
   balicek.sort(() => Math.random() - 0.5);
 }
 
-// ✅ vytvoření karty
+// karta
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
@@ -107,7 +112,7 @@ function vytvorKartu(text, vysledek) {
   return karta;
 }
 
-// ✅ líznutí
+// líznutí
 function lizniKartu() {
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
@@ -123,7 +128,7 @@ function lizniKartu() {
   zona.appendChild(karta);
 }
 
-// ✅ drop
+// drop
 document.querySelectorAll(".sloupec").forEach(sloupec => {
 
   sloupec.addEventListener("dragover", (e) => {
@@ -152,7 +157,7 @@ document.querySelectorAll(".sloupec").forEach(sloupec => {
 
 });
 
-// ✅ kontrola
+// kontrola
 function zkontroluj() {
   let sloupce = document.querySelectorAll(".sloupec");
 
@@ -161,7 +166,7 @@ function zkontroluj() {
   sloupce.forEach(sloupec => {
     let karty = sloupec.children;
 
-    sloupec.style.backgroundColor = "rgba(255,255,255,0.2)";
+    sloupec.style.backgroundColor = "#c8e6c9";
 
     if (karty.length === 0) {
       sloupec.style.backgroundColor = "#ff9999";
@@ -190,13 +195,11 @@ function zkontroluj() {
   });
 
   if (vseSpravne) {
-    setTimeout(() => {
-      alert("🎉 Skvělá práce!");
-    }, 200);
+    setTimeout(() => alert("🎉 Skvělá práce!"), 200);
   }
 }
 
-// ✅ nová hra
+// nová hra
 function novaHra() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
     sloupec.innerHTML = "";
@@ -209,8 +212,7 @@ function novaHra() {
   generuj();
 }
 
-
-// ✅ režimy
+// režimy
 function nastavObtiznost(hodnota) {
   maxCislo = hodnota;
   novaHra();
@@ -221,7 +223,7 @@ function nastavRezim(r) {
   novaHra();
 }
 
-// ✅ návod toggle
+// návod
 function toggleNavod() {
   let navod = document.getElementById("navod");
 
