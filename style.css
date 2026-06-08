@@ -101,23 +101,19 @@ button {
 .sloupec div:first-child {
   background: #d4af37;   /* 🟡 zlatá */
   border-radius: 5px;
-
   font-weight: bold;
   padding: 3px;
   margin-bottom: 5px;
-
   color: black;
 }
+
 .podpis {
   position: fixed !important;
-
   bottom: 8px;
   right: 12px;
-
   font-size: 11px;
   color: rgba(255,255,255,0.6);
   opacity: 0.7;
-  
   z-index: 9999;        /* ✅ zajistí, že bude nahoře */
   pointer-events: none; /* ✅ neblokuje klikání */
 }
