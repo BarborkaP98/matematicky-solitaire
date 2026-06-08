@@ -93,7 +93,35 @@ function lizniKartu() {
   zona.innerHTML = "";
   zona.appendChild(vytvorKartu(k.priklad, k.vysledek));
 }
+function presun(sloupec, karta) {
 
+  let puvodni = karta.parentElement;
+
+  // ✅ odeber kartu ze starého sloupce
+  if (puvodni && puvodni.classList.contains("sloupec")) {
+    karta.remove();
+
+    // ✅ pokud tam nic nezbylo → smaž nadpis
+    if (puvodni.querySelectorAll(".karta").length === 0) {
+      puvodni.innerHTML = "";
+    }
+  }
+
+  // ✅ pokud je nový sloupec prázdný → přidej nadpis
+  if (sloupec.querySelectorAll(".karta").length === 0) {
+    let nadpis = document.createElement("div");
+    nadpis.innerText = karta.dataset.v;
+    nadpis.style.fontWeight = "bold";
+    sloupec.appendChild(nadpis);
+  }
+
+  sloupec.appendChild(karta);
+
+  vybranaKarta = null;
+  tazenaKarta = null;
+
+  document.getElementById("aktualni-karta").innerHTML = "";
+}
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
@@ -104,14 +132,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!tazenaKarta) return;
 
-      vloz(sloupec, tazenaKarta);
+      presun(sloupec, tazenaKarta);
       tazenaKarta = null;
     });
 
     sloupec.addEventListener("click", () => {
       if (!vybranaKarta) return;
 
-      vloz(sloupec, vybranaKarta);
+      presun(sloupec, vybranaKarta);
       vybranaKarta = null;
     });
 
