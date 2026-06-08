@@ -8,6 +8,7 @@ function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// ✅ GENEROVÁNÍ
 function generuj() {
   balicek = [];
   let vysledky = [];
@@ -63,6 +64,7 @@ function generuj() {
   balicek.sort(() => Math.random() - 0.5);
 }
 
+// ✅ KARTA
 function vytvorKartu(text, vysledek) {
   let karta = document.createElement("div");
   karta.className = "karta";
@@ -70,15 +72,17 @@ function vytvorKartu(text, vysledek) {
   karta.dataset.v = vysledek;
   karta.draggable = true;
 
+  // 👉 drag (PC)
   karta.addEventListener("dragstart", () => {
     tazenaKarta = karta;
   });
 
-  karta.addEventListener("click", function () => {
-    
-  document.querySelectorAll(".karta").forEach(k => k.style.border = "none");
+  // ✅ výběr (funguje i na mobilu)
+  karta.addEventListener("click", () => {
 
-  karta.style.border = "2px solid red";
+    document.querySelectorAll(".karta").forEach(k => k.style.border = "none");
+
+    karta.style.border = "2px solid red";
 
     vybranaKarta = karta;
   });
@@ -86,6 +90,7 @@ function vytvorKartu(text, vysledek) {
   return karta;
 }
 
+// ✅ LÍZNUTÍ
 function lizniKartu() {
   if (balicek.length === 0) {
     document.getElementById("aktualni-karta").innerText = "Konec hry";
@@ -98,21 +103,20 @@ function lizniKartu() {
   zona.innerHTML = "";
   zona.appendChild(vytvorKartu(k.priklad, k.vysledek));
 }
+
+// ✅ PŘESUN (OPRAVENÝ)
 function presun(sloupec, karta) {
 
   let puvodni = karta.parentElement;
 
-  // ✅ odeber kartu ze starého sloupce
   if (puvodni && puvodni.classList.contains("sloupec")) {
     karta.remove();
 
-    // ✅ pokud tam nic nezbylo → smaž nadpis
     if (puvodni.querySelectorAll(".karta").length === 0) {
       puvodni.innerHTML = "";
     }
   }
 
-  // ✅ pokud je nový sloupec prázdný → přidej nadpis
   if (sloupec.querySelectorAll(".karta").length === 0) {
     let nadpis = document.createElement("div");
     nadpis.innerText = karta.dataset.v;
@@ -127,20 +131,23 @@ function presun(sloupec, karta) {
 
   document.getElementById("aktualni-karta").innerHTML = "";
 }
+
+// ✅ INIT
 document.addEventListener("DOMContentLoaded", () => {
+
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
+    // ✅ drag (PC)
     sloupec.addEventListener("dragover", e => e.preventDefault());
 
     sloupec.addEventListener("drop", e => {
       e.preventDefault();
-
       if (!tazenaKarta) return;
 
       presun(sloupec, tazenaKarta);
-      tazenaKarta = null;
     });
 
+    // ✅ klikání (mobil + PC)
     sloupec.addEventListener("click", () => {
       if (!vybranaKarta) return;
 
@@ -152,18 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
   generuj();
 });
 
-function vloz(sloupec, karta) {
-  if (sloupec.querySelectorAll(".karta").length === 0) {
-    let nadpis = document.createElement("div");
-    nadpis.innerText = karta.dataset.v;
-    nadpis.style.fontWeight = "bold";
-    sloupec.appendChild(nadpis);
-  }
-
-  sloupec.appendChild(karta);
-  document.getElementById("aktualni-karta").innerHTML = "";
-}
-
+// ✅ KONTROLA
 function zkontroluj() {
   document.querySelectorAll(".sloupec").forEach(sloupec => {
 
@@ -187,6 +183,7 @@ function zkontroluj() {
   });
 }
 
+// ✅ NOVÁ HRA
 function novaHra() {
   document.querySelectorAll(".sloupec").forEach(s => {
     s.innerHTML = "";
@@ -197,6 +194,7 @@ function novaHra() {
   generuj();
 }
 
+// ✅ OVLÁDÁNÍ
 function nastavObtiznost(h) {
   maxCislo = h;
   novaHra();
@@ -211,3 +209,4 @@ function toggleNavod() {
   let n = document.getElementById("navod");
   n.style.display = n.style.display === "none" ? "block" : "none";
 }
+``
