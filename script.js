@@ -74,7 +74,12 @@ function vytvorKartu(text, vysledek) {
     tazenaKarta = karta;
   });
 
-  karta.addEventListener("click", () => {
+  karta.addEventListener("click", function () => {
+    
+  document.querySelectorAll(".karta").forEach(k => k.style.border = "none");
+
+  karta.style.border = "2px solid red";
+
     vybranaKarta = karta;
   });
 
@@ -140,7 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!vybranaKarta) return;
 
       presun(sloupec, vybranaKarta);
-      vybranaKarta = null;
     });
 
   });
