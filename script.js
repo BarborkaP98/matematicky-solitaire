@@ -43,14 +43,14 @@ function generuj() {
           let a = rand(1, 10);
           if (v % a === 0) {
             let b = v / a;
-            priklad = `${a} × ${b}`;
+            priklad = `${a} · ${b}`;
           } else {
-            priklad = `1 × ${v}`;
+            priklad = `1 · ${v}`;
           }
         } else {
           let b = rand(1, 10);
           let a = v * b;
-          priklad = `${a} ÷ ${b}`;
+          priklad = `${a} : ${b}`;
         }
       }
 
